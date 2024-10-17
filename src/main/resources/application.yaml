@@ -7,3 +7,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/excelia
     username: user
     password: secret
+
+  docker:
+    compose:
+      file: infra/database/compose.yaml
+      lifecycle-management: start_only
