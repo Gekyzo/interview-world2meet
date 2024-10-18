@@ -20,8 +20,8 @@ public class CreateSpaceshipControllerAdapter implements CreateSpaceshipControll
     @Override
     public ResponseEntity<CreateSpaceshipResponse> create(CreateSpaceshipRequest request) {
 
-        Spaceship spaceship = createSpaceship.create(mapper.requestToCommand(request));
+        Spaceship spaceship = createSpaceship.create(mapper.toCommand(request));
 
-        return new ResponseEntity<>(mapper.entityToResponse(spaceship), HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.toResponse(spaceship), HttpStatus.CREATED);
     }
 }

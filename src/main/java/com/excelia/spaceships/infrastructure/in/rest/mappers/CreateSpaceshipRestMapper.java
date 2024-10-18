@@ -11,25 +11,25 @@ import java.util.UUID;
 @Component
 public class CreateSpaceshipRestMapper {
 
-    public CreateSpaceshipCommand requestToCommand(CreateSpaceshipRequest request) {
+    public CreateSpaceshipCommand toCommand(CreateSpaceshipRequest source) {
         return new CreateSpaceshipCommand(
                 UUID.randomUUID(),
-                request.name(),
-                request.captainName(),
-                request.length(),
-                request.maxSpeed(),
-                request.appearsIn()
+                source.name(),
+                source.captainName(),
+                source.length(),
+                source.maxSpeed(),
+                source.appearsIn()
         );
     }
 
-    public CreateSpaceshipResponse entityToResponse(Spaceship spaceship) {
+    public CreateSpaceshipResponse toResponse(Spaceship source) {
         return new CreateSpaceshipResponse(
-                spaceship.getId(),
-                spaceship.getName(),
-                spaceship.getCaptainName(),
-                spaceship.getLength(),
-                spaceship.getMaxSpeed(),
-                spaceship.getAppearsIn()
+                source.getId(),
+                source.getName(),
+                source.getCaptainName(),
+                source.getLength(),
+                source.getMaxSpeed(),
+                source.getAppearsIn()
         );
     }
 }

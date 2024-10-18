@@ -38,12 +38,12 @@ class CreateSpaceshipTest {
 
         sut.create(command);
 
-        verify(mapper).commandToEntity(command);
+        verify(mapper).toEntity(command);
     }
 
     @Test
     void given_ValidCreateSpaceshipCommand_when_UseCaseIsInvoked_then_RepositoryIsInvoked() {
-        given(mapper.commandToEntity(any())).willReturn(aSpaceship());
+        given(mapper.toEntity(any())).willReturn(aSpaceship());
         var command = Instancio.of(CreateSpaceshipCommand.class).create();
 
         sut.create(command);
@@ -53,13 +53,13 @@ class CreateSpaceshipTest {
 
     @Test
     void given_ValidCreateSpaceshipCommand_when_UseCaseIsInvoked_then_ReturnsSpaceship() {
-        given(mapper.commandToEntity(any())).willReturn(aSpaceship());
+        given(mapper.toEntity(any())).willReturn(aSpaceship());
         given(repository.create(any())).willReturn(aSpaceship());
         var command = Instancio.of(CreateSpaceshipCommand.class).create();
 
         var result = sut.create(command);
 
-        assertThat(result).isNotIn();
+        assertThat(result).isNotNull();
     }
 
     private static Spaceship aSpaceship() {

@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class CreateSpaceshipMapper {
 
-    public Spaceship commandToEntity(CreateSpaceshipCommand command) {
+    public Spaceship toEntity(CreateSpaceshipCommand source) {
         return Spaceship.builder()
-                .id(command.id())
-                .name(command.name())
-                .captainName(command.captainName())
-                .length(command.length())
-                .maxSpeed(command.maxSpeed())
-                .appearsIn(command.appearsIn())
+                .id(source.id())
+                .name(source.name())
+                .captainName(source.captainName())
+                .length(source.length())
+                .maxSpeed(source.maxSpeed())
+                .appearsIn(source.appearsIn())
                 .build();
     }
 }

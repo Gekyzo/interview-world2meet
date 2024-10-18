@@ -17,7 +17,7 @@ public class CreateSpaceship implements CreateSpaceshipPort {
 
     @Override
     public Spaceship create(CreateSpaceshipCommand command) {
-        Spaceship entity = mapper.commandToEntity(command);
+        Spaceship entity = mapper.toEntity(command);
         return repository.create(entity);
     }
 }
