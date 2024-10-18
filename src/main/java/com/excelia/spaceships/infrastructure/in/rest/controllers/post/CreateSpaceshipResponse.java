@@ -1,4 +1,4 @@
-package com.excelia.spaceships.infrastructure.in.rest.controllers.post.out;
+package com.excelia.spaceships.infrastructure.in.rest.controllers.post;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

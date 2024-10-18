@@ -1,7 +1,5 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.post;
 
-import com.excelia.spaceships.infrastructure.in.rest.controllers.post.in.CreateSpaceshipRequest;
-import com.excelia.spaceships.infrastructure.in.rest.controllers.post.out.CreateSpaceshipResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

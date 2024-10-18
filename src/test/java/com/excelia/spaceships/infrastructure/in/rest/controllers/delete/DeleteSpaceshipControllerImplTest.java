@@ -41,9 +41,11 @@ class DeleteSpaceshipControllerImplTest extends ControllerTest {
     @Test
     void given_InvalidDeleteSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsNotFound() throws Exception {
 
-        doThrow(new SpaceshipNotFoundException()).when(deleteSpaceship).delete(aNonExistentSpaceshipId());
+        var nonExistentSpaceshipId = aNonExistentSpaceshipId();
 
-        mockMvc.perform(delete(DELETE_SPACESHIP_URI, aNonExistentSpaceshipId())
+        doThrow(new SpaceshipNotFoundException()).when(deleteSpaceship).delete(nonExistentSpaceshipId);
+
+        mockMvc.perform(delete(DELETE_SPACESHIP_URI, nonExistentSpaceshipId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
