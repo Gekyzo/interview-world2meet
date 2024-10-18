@@ -1,6 +1,6 @@
 package com.excelia.spaceships.infrastructure.in.rest.adapter.post;
 
-import com.excelia.spaceships.application.ports.CreateSpaceship;
+import com.excelia.spaceships.application.ports.CreateSpaceshipPort;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.infrastructure.in.rest.adapter.post.in.CreateSpaceshipRequest;
 import com.excelia.spaceships.infrastructure.in.rest.adapter.post.out.CreateSpaceshipResponse;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CreateSpaceshipControllerAdapter implements CreateSpaceshipController {
 
-    private final CreateSpaceship createSpaceship;
+    private final CreateSpaceshipPort createSpaceship;
     private final CreateSpaceshipRestMapper mapper;
 
     @Override

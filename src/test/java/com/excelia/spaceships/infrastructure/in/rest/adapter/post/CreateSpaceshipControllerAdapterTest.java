@@ -1,6 +1,6 @@
 package com.excelia.spaceships.infrastructure.in.rest.adapter.post;
 
-import com.excelia.spaceships.application.ports.CreateSpaceship;
+import com.excelia.spaceships.application.ports.CreateSpaceshipPort;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.infrastructure.in.rest.adapter.ControllerTest;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.CreateSpaceshipRestMapper;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CreateSpaceshipControllerAdapterTest extends ControllerTest {
 
     @MockBean
-    private CreateSpaceship createSpaceship;
+    private CreateSpaceshipPort createSpaceship;
 
     private static final String CREATE_SPACESHIP_URI = "/spaceships";
 
