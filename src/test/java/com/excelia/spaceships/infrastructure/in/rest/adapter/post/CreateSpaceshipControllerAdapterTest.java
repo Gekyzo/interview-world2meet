@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Import({CreateSpaceshipRestMapper.class})
 @WebMvcTest(controllers = {CreateSpaceshipController.class})
-class CreateSpaceshipControllerTest extends ControllerTest {
+class CreateSpaceshipControllerAdapterTest extends ControllerTest {
 
     @MockBean
     private CreateSpaceship createSpaceship;
