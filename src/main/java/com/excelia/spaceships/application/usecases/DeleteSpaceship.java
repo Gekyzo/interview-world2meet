@@ -1,7 +1,7 @@
 package com.excelia.spaceships.application.usecases;
 
-import com.excelia.spaceships.application.ports.in.DeleteSpaceshipPort;
-import com.excelia.spaceships.application.ports.out.SpaceshipRepositoryPort;
+import com.excelia.spaceships.domain.ports.in.DeleteSpaceshipPort;
+import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

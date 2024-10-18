@@ -1,12 +1,12 @@
 package com.junit.object_mothers;
 
-import com.excelia.spaceships.infrastructure.out.persistence.entities.SpaceshipPostgreEntity;
+import com.excelia.spaceships.infrastructure.out.persistence.model.SpaceshipPostgreModel;
 import org.instancio.Instancio;
 
 public final class SpaceshipPostgreObjectMother {
 
-    public static SpaceshipPostgreEntity aSpaceshipPostgreEntity() {
-        return Instancio.of(SpaceshipPostgreEntity.class).create();
+    public static SpaceshipPostgreModel aSpaceshipPostgreEntity() {
+        return Instancio.of(SpaceshipPostgreModel.class).create();
     }
 
 }

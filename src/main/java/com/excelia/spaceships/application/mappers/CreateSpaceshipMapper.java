@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class CreateSpaceshipMapper {
 
     public Spaceship toEntity(CreateSpaceshipCommand source) {
+
         return Spaceship.builder()
                 .id(source.id())
                 .name(source.name())

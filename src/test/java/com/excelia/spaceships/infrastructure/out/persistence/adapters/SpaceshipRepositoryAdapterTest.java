@@ -1,7 +1,7 @@
 package com.excelia.spaceships.infrastructure.out.persistence.adapters;
 
 import com.excelia.spaceships.domain.entities.Spaceship;
-import com.excelia.spaceships.infrastructure.out.persistence.entities.SpaceshipPostgreEntity;
+import com.excelia.spaceships.infrastructure.out.persistence.model.SpaceshipPostgreModel;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipPostgreMapper;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipPostgreRepository;
 import org.instancio.Instancio;
@@ -50,7 +50,7 @@ class SpaceshipRepositoryAdapterTest {
 
         sut.create(entity);
 
-        verify(postgreRepository).save(any(SpaceshipPostgreEntity.class));
+        verify(postgreRepository).save(any(SpaceshipPostgreModel.class));
     }
 
     @Test
@@ -61,7 +61,7 @@ class SpaceshipRepositoryAdapterTest {
 
         sut.create(entity);
 
-        verify(mapper).toDomainEntity(any(SpaceshipPostgreEntity.class));
+        verify(mapper).toDomainEntity(any(SpaceshipPostgreModel.class));
     }
 
     @Test
@@ -73,7 +73,7 @@ class SpaceshipRepositoryAdapterTest {
 
         var result = sut.create(entity);
 
-        assertThat(result).isNotIn();
+        assertThat(result).isNotNull();
     }
 
 }
