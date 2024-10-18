@@ -8,6 +8,8 @@ import com.excelia.spaceships.infrastructure.out.persistence.repositories.Spaces
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
@@ -19,5 +21,10 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
     public Spaceship create(Spaceship entity) {
         SpaceshipPostgreEntity postgreEntity = mapper.toPostgreEntity(entity);
         return mapper.toDomainEntity(postgreRepository.save(postgreEntity));
+    }
+
+    @Override
+    public void delete(UUID spaceshipId) {
+        postgreRepository.deleteById(spaceshipId);
     }
 }
