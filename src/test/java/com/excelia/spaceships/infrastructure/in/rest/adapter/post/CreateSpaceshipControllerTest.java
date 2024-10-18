@@ -70,9 +70,9 @@ class CreateSpaceshipControllerTest extends ControllerTest {
                 {
                   "name": "Millennium Falcon",
                   "captain_name": "Han Solo",
-                  "length": 34.75,
+                  "length": true,
                   "max_speed": 1050,
-                  "appears_in": true
+                  "appears_in": "Star Wars"
                 }
                 """;
     }
