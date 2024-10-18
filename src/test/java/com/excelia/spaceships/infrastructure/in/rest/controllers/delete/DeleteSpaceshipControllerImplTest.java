@@ -6,7 +6,6 @@ import com.excelia.spaceships.infrastructure.in.rest.controllers.ControllerTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 
 import java.util.UUID;
 
@@ -25,16 +24,14 @@ class DeleteSpaceshipControllerImplTest extends ControllerTest {
     @Test
     void given_ValidDeleteSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsNoContent() throws Exception {
 
-        mockMvc.perform(delete(DELETE_SPACESHIP_URI, aValidSpaceshipId())
-                        .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete(DELETE_SPACESHIP_URI, aValidSpaceshipId()))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     void given_InvalidDeleteSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsBadRequest() throws Exception {
 
-        mockMvc.perform(delete(DELETE_SPACESHIP_URI, anInvalidSpaceshipId())
-                        .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete(DELETE_SPACESHIP_URI, anInvalidSpaceshipId()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -45,8 +42,7 @@ class DeleteSpaceshipControllerImplTest extends ControllerTest {
 
         doThrow(new SpaceshipNotFoundException()).when(deleteSpaceship).delete(nonExistentSpaceshipId);
 
-        mockMvc.perform(delete(DELETE_SPACESHIP_URI, nonExistentSpaceshipId)
-                        .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete(DELETE_SPACESHIP_URI, nonExistentSpaceshipId))
                 .andExpect(status().isNotFound());
     }
 

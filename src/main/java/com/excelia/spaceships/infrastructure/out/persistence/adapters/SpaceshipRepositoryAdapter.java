@@ -20,8 +20,8 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
 
     @Override
     public Spaceship create(Spaceship entity) {
-        SpaceshipPostgreModel postgreModel = mapper.toPostgreEntity(entity);
-        return mapper.toDomainEntity(postgreRepository.save(postgreModel));
+        SpaceshipPostgreModel model = mapper.toPostgreEntity(entity);
+        return mapper.toDomainEntity(postgreRepository.save(model));
     }
 
     @Override
@@ -32,5 +32,13 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
     @Override
     public Optional<Spaceship> findById(UUID spaceshipId) {
         return postgreRepository.findById(spaceshipId).map(mapper::toDomainEntity);
+    }
+
+    @Override
+    public Optional<Spaceship> update(Spaceship entity) {
+        SpaceshipPostgreModel model = mapper.toPostgreEntity(entity);
+        return postgreRepository
+                .findById(entity.getId())
+                .map(_ -> mapper.toDomainEntity(postgreRepository.save(model)));
     }
 }

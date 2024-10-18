@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.MediaType;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -31,10 +30,10 @@ class GetSpaceshipControllerImplTest extends ControllerTest {
     void given_ValidGetSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsOk() throws Exception {
 
         var validSpaceshipId = aValidSpaceshipId();
+
         given(findSpaceship.findById(validSpaceshipId)).willReturn(Optional.of(aSpaceship()));
 
-        mockMvc.perform(get(GET_SPACESHIP_URI, validSpaceshipId)
-                        .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(GET_SPACESHIP_URI, validSpaceshipId))
                 .andExpect(status().isOk());
     }
 
@@ -42,6 +41,7 @@ class GetSpaceshipControllerImplTest extends ControllerTest {
     void given_ValidGetSpaceshipRequest_when_EndpointIsInvoked_then_ResponseMatchesExpected() throws Exception {
 
         var validSpaceshipId = aValidSpaceshipId();
+
         given(findSpaceship.findById(validSpaceshipId)).willReturn(Optional.of(aSpaceship()));
 
         mockMvc
@@ -55,10 +55,9 @@ class GetSpaceshipControllerImplTest extends ControllerTest {
     }
 
     @Test
-    void given_InvalidGetSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsBadRequest() throws Exception {
+    void given_InvalidSpaceshipIdInPathVariable_when_EndpointIsInvoked_then_ResponseIsBadRequest() throws Exception {
 
-        mockMvc.perform(get(GET_SPACESHIP_URI, anInvalidSpaceshipId())
-                        .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(GET_SPACESHIP_URI, anInvalidSpaceshipId()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -66,10 +65,10 @@ class GetSpaceshipControllerImplTest extends ControllerTest {
     void given_InvalidGetSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsNotFound() throws Exception {
 
         var nonExistentSpaceshipId = aNonExistentSpaceshipId();
+
         given(findSpaceship.findById(nonExistentSpaceshipId)).willReturn(Optional.empty());
 
-        mockMvc.perform(get(GET_SPACESHIP_URI, nonExistentSpaceshipId)
-                        .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(GET_SPACESHIP_URI, nonExistentSpaceshipId))
                 .andExpect(status().isNotFound());
     }
 

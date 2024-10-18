@@ -12,4 +12,6 @@ public interface SpaceshipRepositoryPort {
     void delete(UUID spaceshipId);
 
     Optional<Spaceship> findById(UUID spaceshipId);
+
+    Optional<Spaceship> update(Spaceship entity);
 }
