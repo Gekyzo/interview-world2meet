@@ -1,6 +1,6 @@
 package com.excelia.spaceships.infrastructure.in.rest.adapter.post;
 
-import com.excelia.spaceships.application.ports.CreateSpaceshipPort;
+import com.excelia.spaceships.application.ports.in.CreateSpaceshipPort;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.infrastructure.in.rest.adapter.post.in.CreateSpaceshipRequest;
 import com.excelia.spaceships.infrastructure.in.rest.adapter.post.out.CreateSpaceshipResponse;

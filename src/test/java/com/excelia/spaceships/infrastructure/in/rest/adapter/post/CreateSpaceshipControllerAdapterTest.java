@@ -1,6 +1,6 @@
 package com.excelia.spaceships.infrastructure.in.rest.adapter.post;
 
-import com.excelia.spaceships.application.ports.CreateSpaceshipPort;
+import com.excelia.spaceships.application.ports.in.CreateSpaceshipPort;
 import com.excelia.spaceships.infrastructure.in.rest.adapter.ControllerTest;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.CreateSpaceshipRestMapper;
 import org.junit.jupiter.api.Test;
