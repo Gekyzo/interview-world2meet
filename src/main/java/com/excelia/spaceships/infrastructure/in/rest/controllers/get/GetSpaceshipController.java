@@ -1,6 +1,7 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.get;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,10 @@ public interface GetSpaceshipController {
 
     @Operation(summary = "Retrieves a spaceship by spaceship-id")
     @GetMapping("{spaceship-id}")
-    ResponseEntity<Void> get(@PathVariable(name = "spaceship-id") UUID spaceshipId);
+    ResponseEntity<GetSpaceshipResponse> get(
+            @Parameter(example = "123e4567-e89b-12d3-a456-426614174000")
+            @PathVariable(name = "spaceship-id")
+            UUID spaceshipId
+    );
 
 }

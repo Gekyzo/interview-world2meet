@@ -1,13 +1,14 @@
 package com.excelia.spaceships.infrastructure.out.persistence.adapters;
 
-import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
 import com.excelia.spaceships.domain.entities.Spaceship;
-import com.excelia.spaceships.infrastructure.out.persistence.model.SpaceshipPostgreModel;
+import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipPostgreMapper;
+import com.excelia.spaceships.infrastructure.out.persistence.model.SpaceshipPostgreModel;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipPostgreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -26,5 +27,10 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
     @Override
     public void delete(UUID spaceshipId) {
         postgreRepository.deleteById(spaceshipId);
+    }
+
+    @Override
+    public Optional<Spaceship> findById(UUID spaceshipId) {
+        return postgreRepository.findById(spaceshipId).map(mapper::toDomainEntity);
     }
 }
