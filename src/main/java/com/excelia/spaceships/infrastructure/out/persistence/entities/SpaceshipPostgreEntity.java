@@ -1,35 +1,38 @@
 package com.excelia.spaceships.infrastructure.out.persistence.entities;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Getter
 @Builder
-@Table("spaceships")
+@Entity(name = "spaceships")
+@NoArgsConstructor
+@AllArgsConstructor
 public class SpaceshipPostgreEntity {
 
     @Id
-    @Column("id")
+    @Column(name = "id")
     private UUID id;
 
-    @Column("name")
+    @Column(name = "name")
     private String name;
 
-    @Column("captain_name")
+    @Column(name = "captain_name")
     private String captainName;
 
-    @Column("lenght")
+    @Column(name = "length")
     private Double length;
 
-    @Column("max_speed")
+    @Column(name = "max_speed")
     private Integer maxSpeed;
 
-    @Column("appears_in")
+    @Column(name = "appears_in")
     private String appearsIn;
-
 }

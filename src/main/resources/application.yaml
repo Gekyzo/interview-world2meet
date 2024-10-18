@@ -5,8 +5,11 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/excelia
-    username: user
+    username: postgres
     password: secret
+
+  flyway:
+    locations: classpath:db/migrations
 
   docker:
     compose:
