@@ -11,6 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.junit.object_mothers.SpaceshipObjectMother.aSpaceship;
+import static com.junit.object_mothers.SpaceshipPostgreObjectMother.aSpaceshipPostgreEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -72,14 +74,6 @@ class SpaceshipRepositoryAdapterTest {
         var result = sut.create(entity);
 
         assertThat(result).isNotIn();
-    }
-
-    private static Spaceship aSpaceship() {
-        return Instancio.of(Spaceship.class).create();
-    }
-
-    private static SpaceshipPostgreEntity aSpaceshipPostgreEntity() {
-        return Instancio.of(SpaceshipPostgreEntity.class).create();
     }
 
 }

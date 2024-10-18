@@ -1,16 +1,15 @@
 package com.excelia.spaceships.infrastructure.in.rest.adapter.post;
 
 import com.excelia.spaceships.application.ports.CreateSpaceshipPort;
-import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.infrastructure.in.rest.adapter.ControllerTest;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.CreateSpaceshipRestMapper;
-import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 
+import static com.junit.object_mothers.SpaceshipObjectMother.aSpaceship;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -88,10 +87,6 @@ class CreateSpaceshipControllerAdapterTest extends ControllerTest {
                   "appears_in": "Star Wars"
                 }
                 """;
-    }
-
-    private static Spaceship aSpaceship() {
-        return Instancio.of(Spaceship.class).create();
     }
 
 }
