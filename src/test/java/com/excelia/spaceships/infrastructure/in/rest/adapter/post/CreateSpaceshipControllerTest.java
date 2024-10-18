@@ -1,24 +1,37 @@
 package com.excelia.spaceships.infrastructure.in.rest.adapter.post;
 
+import com.excelia.spaceships.application.ports.CreateSpaceship;
+import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.infrastructure.in.rest.adapter.ControllerTest;
+import com.excelia.spaceships.infrastructure.in.rest.mappers.CreateSpaceshipRestMapper;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Import({CreateSpaceshipRestMapper.class})
 @WebMvcTest(controllers = {CreateSpaceshipController.class})
 class CreateSpaceshipControllerTest extends ControllerTest {
+
+    @MockBean
+    private CreateSpaceship createSpaceship;
 
     private static final String CREATE_SPACESHIP_URI = "/spaceships";
 
     @Test
     void given_ValidCreateSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsCreated() throws Exception {
 
-        var request = aValidCreateSpaceshipRequest();
+        given(createSpaceship.create(any())).willReturn(aSpaceship());
 
+        var request = aValidCreateSpaceshipRequest();
         mockMvc.perform(post(CREATE_SPACESHIP_URI)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(request))
@@ -28,8 +41,9 @@ class CreateSpaceshipControllerTest extends ControllerTest {
     @Test
     void given_ValidCreateSpaceshipRequest_when_EndpointIsInvoked_then_ResponseMatchesExpected() throws Exception {
 
-        var request = aValidCreateSpaceshipRequest();
+        given(createSpaceship.create(any())).willReturn(aSpaceship());
 
+        var request = aValidCreateSpaceshipRequest();
         mockMvc
                 .perform(post(CREATE_SPACESHIP_URI)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -46,14 +60,13 @@ class CreateSpaceshipControllerTest extends ControllerTest {
     void given_InvalidCreateSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsBadRequest() throws Exception {
 
         var request = anInvalidCreateSpaceshipRequest();
-
         mockMvc.perform(post(CREATE_SPACESHIP_URI)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(request))
                 .andExpect(status().isBadRequest());
     }
 
-    private String aValidCreateSpaceshipRequest() {
+    private static String aValidCreateSpaceshipRequest() {
         return """
                 {
                   "name": "Millennium Falcon",
@@ -65,7 +78,7 @@ class CreateSpaceshipControllerTest extends ControllerTest {
                 """;
     }
 
-    private String anInvalidCreateSpaceshipRequest() {
+    private static String anInvalidCreateSpaceshipRequest() {
         return """
                 {
                   "name": "Millennium Falcon",
@@ -75,6 +88,10 @@ class CreateSpaceshipControllerTest extends ControllerTest {
                   "appears_in": "Star Wars"
                 }
                 """;
+    }
+
+    private static Spaceship aSpaceship() {
+        return Instancio.of(Spaceship.class).create();
     }
 
 }

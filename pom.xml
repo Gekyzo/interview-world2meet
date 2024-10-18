@@ -29,6 +29,7 @@
     <properties>
         <java.version>23</java.version>
         <springdoc.openapi.version>2.3.0</springdoc.openapi.version>
+        <instancio.version>5.0.2</instancio.version>
     </properties>
     <dependencies>
 
@@ -82,6 +83,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-docker-compose</artifactId>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.instancio</groupId>
+            <artifactId>instancio-junit</artifactId>
+            <version>${instancio.version}</version>
         </dependency>
 
     </dependencies>
