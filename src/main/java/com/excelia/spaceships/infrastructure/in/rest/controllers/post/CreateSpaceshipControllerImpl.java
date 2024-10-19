@@ -3,12 +3,11 @@ package com.excelia.spaceships.infrastructure.in.rest.controllers.post;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.ports.in.CreateSpaceshipPort;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.CreateSpaceshipRestMapper;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor

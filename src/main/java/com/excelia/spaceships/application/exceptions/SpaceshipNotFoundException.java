@@ -1,8 +1,8 @@
 package com.excelia.spaceships.application.exceptions;
 
-import java.util.UUID;
-
 import static com.excelia.spaceships.shared.MessageUtils.getMessageSource;
+
+import java.util.UUID;
 
 public class SpaceshipNotFoundException extends RuntimeException {
 

@@ -1,5 +1,7 @@
 package com.excelia.spaceships.shared;
 
+import static com.excelia.spaceships.shared.MessageUtils.getMessageSource;
+
 import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -8,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import static com.excelia.spaceships.shared.MessageUtils.getMessageSource;
 
 @Slf4j
 @ControllerAdvice

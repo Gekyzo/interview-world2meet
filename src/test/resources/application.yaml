@@ -1,8 +1,8 @@
 spring:
 
-  output:
-    ansi:
-      enabled: always
+    output:
+        ansi:
+            enabled: always
 
-  datasource:
-    url: jdbc:tc:postgresql:///
+    datasource:
+        url: jdbc:tc:postgresql:///

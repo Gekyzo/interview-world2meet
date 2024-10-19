@@ -1,19 +1,17 @@
 package com.excelia.spaceships.shared;
 
+import static com.excelia.spaceships.shared.MessageUtils.getMessageSource;
+
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static com.excelia.spaceships.shared.MessageUtils.getMessageSource;
 
 @Slf4j
 @Aspect
@@ -28,7 +26,7 @@ public class LogNegativeSpaceshipIdAspect {
         HttpServletRequest request = (HttpServletRequest) args[0];
 
         checkNegativeSpaceshipIdHasBeenRequested(request)
-                .ifPresent(value -> log.info(getMessageSource(MESSAGE_KEY, new Object[]{value})));
+            .ifPresent(value -> log.info(getMessageSource(MESSAGE_KEY, new Object[]{value})));
     }
 
     private Optional<String> checkNegativeSpaceshipIdHasBeenRequested(HttpServletRequest request) {

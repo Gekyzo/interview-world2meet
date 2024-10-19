@@ -10,24 +10,24 @@ public class SpaceshipPostgreMapper {
     public SpaceshipPostgreModel toPostgreEntity(Spaceship source) {
 
         return SpaceshipPostgreModel.builder()
-                .id(source.getId())
-                .name(source.getName())
-                .captainName(source.getCaptainName())
-                .length(source.getLength())
-                .maxSpeed(source.getMaxSpeed())
-                .appearsIn(source.getAppearsIn())
-                .build();
+            .id(source.getId())
+            .name(source.getName())
+            .captainName(source.getCaptainName())
+            .length(source.getLength())
+            .maxSpeed(source.getMaxSpeed())
+            .appearsIn(source.getAppearsIn())
+            .build();
     }
 
     public Spaceship toDomainEntity(SpaceshipPostgreModel source) {
 
         return Spaceship.builder()
-                .id(source.getId())
-                .name(source.getName())
-                .captainName(source.getCaptainName())
-                .length(source.getLength())
-                .maxSpeed(source.getMaxSpeed())
-                .appearsIn(source.getAppearsIn())
-                .build();
+            .id(source.getId())
+            .name(source.getName())
+            .captainName(source.getCaptainName())
+            .length(source.getLength())
+            .maxSpeed(source.getMaxSpeed())
+            .appearsIn(source.getAppearsIn())
+            .build();
     }
 }

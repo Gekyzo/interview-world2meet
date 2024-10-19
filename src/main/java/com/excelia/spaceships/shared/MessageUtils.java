@@ -1,10 +1,9 @@
 package com.excelia.spaceships.shared;
 
+import java.util.Locale;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.context.support.ResourceBundleMessageSource;
-
-import java.util.Locale;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MessageUtils {

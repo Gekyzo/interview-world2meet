@@ -10,12 +10,12 @@ public class CreateSpaceshipMapper {
     public Spaceship toEntity(CreateSpaceshipCommand source) {
 
         return Spaceship.builder()
-                .id(source.id())
-                .name(source.name())
-                .captainName(source.captainName())
-                .length(source.length())
-                .maxSpeed(source.maxSpeed())
-                .appearsIn(source.appearsIn())
-                .build();
+            .id(source.id())
+            .name(source.name())
+            .captainName(source.captainName())
+            .length(source.length())
+            .maxSpeed(source.maxSpeed())
+            .appearsIn(source.appearsIn())
+            .build();
     }
 }

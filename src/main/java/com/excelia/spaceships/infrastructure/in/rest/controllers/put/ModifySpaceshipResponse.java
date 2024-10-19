@@ -1,24 +1,24 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.put;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.UUID;
 
 public record ModifySpaceshipResponse(
 
-        UUID id,
+    UUID id,
 
-        String name,
+    String name,
 
-        @JsonProperty("captain_name")
-        String captainName,
+    @JsonProperty("captain_name")
+    String captainName,
 
-        Double length,
+    Double length,
 
-        @JsonProperty("max_speed")
-        Integer maxSpeed,
+    @JsonProperty("max_speed")
+    Integer maxSpeed,
 
-        @JsonProperty("appears_in")
-        String appearsIn
+    @JsonProperty("appears_in")
+    String appearsIn
 ) {
+
 }

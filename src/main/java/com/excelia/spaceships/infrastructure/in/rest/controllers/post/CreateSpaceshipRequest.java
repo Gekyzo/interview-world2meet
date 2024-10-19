@@ -7,27 +7,28 @@ import jakarta.validation.constraints.Positive;
 
 public record CreateSpaceshipRequest(
 
-        @NotBlank
-        @Schema(example = "Millennium Falcon")
-        String name,
+    @NotBlank
+    @Schema(example = "Millennium Falcon")
+    String name,
 
-        @NotBlank
-        @Schema(example = "Han Solo")
-        @JsonProperty("captain_name")
-        String captainName,
+    @NotBlank
+    @Schema(example = "Han Solo")
+    @JsonProperty("captain_name")
+    String captainName,
 
-        @Positive
-        @Schema(example = "34.75")
-        Double length,
+    @Positive
+    @Schema(example = "34.75")
+    Double length,
 
-        @Positive
-        @Schema(example = "1050")
-        @JsonProperty("max_speed")
-        Integer maxSpeed,
+    @Positive
+    @Schema(example = "1050")
+    @JsonProperty("max_speed")
+    Integer maxSpeed,
 
-        @NotBlank
-        @Schema(example = "Star Wars")
-        @JsonProperty("appears_in")
-        String appearsIn
+    @NotBlank
+    @Schema(example = "Star Wars")
+    @JsonProperty("appears_in")
+    String appearsIn
 ) {
+
 }

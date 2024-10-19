@@ -1,7 +1,6 @@
 package com.junit;
 
 import org.junit.jupiter.api.DisplayNameGenerator;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +28,9 @@ public class CustomNameGenerator {
 
         public String replaceCamelCase(String input) {
             String normalizedInput = input.replace("_", "")
-                    .replace("given", "Given")
-                    .replace("when", "When")
-                    .replace("then", "Then");
+                .replace("given", "Given")
+                .replace("when", "When")
+                .replace("then", "Then");
             String[] words = splitByCharacterTypeCamelCase(normalizedInput);
             List<String> sb = new ArrayList<>();
             for (String word : words) {

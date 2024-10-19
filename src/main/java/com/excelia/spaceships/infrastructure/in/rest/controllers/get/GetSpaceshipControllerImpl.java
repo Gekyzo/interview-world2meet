@@ -2,11 +2,10 @@ package com.excelia.spaceships.infrastructure.in.rest.controllers.get;
 
 import com.excelia.spaceships.domain.ports.in.FindSpaceshipPort;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.GetSpaceshipRestMapper;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor

@@ -5,10 +5,9 @@ import com.excelia.spaceships.domain.command.ModifySpaceshipCommand;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.ports.in.ModifySpaceshipPort;
 import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

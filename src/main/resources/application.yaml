@@ -1,21 +1,21 @@
 spring:
 
-  application:
-    name: spaceships
+    application:
+        name: spaceships
 
-  datasource:
-    url: jdbc:postgresql://localhost:5432/excelia
-    username: postgres
-    password: secret
+    datasource:
+        url: jdbc:postgresql://localhost:5432/excelia
+        username: postgres
+        password: secret
 
-  flyway:
-    locations: classpath:db/migrations
+    flyway:
+        locations: classpath:db/migrations
 
-  docker:
-    compose:
-      file: infra/database/compose.yaml
-      lifecycle-management: start_only
+    docker:
+        compose:
+            file: infra/database/compose.yaml
+            lifecycle-management: start_only
 
-  mvc:
-    problemdetails:
-      enabled: true
+    mvc:
+        problemdetails:
+            enabled: true

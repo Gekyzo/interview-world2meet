@@ -1,5 +1,11 @@
 package com.excelia.spaceships.application.usecases;
 
+import static com.junit.object_mothers.SpaceshipObjectMother.aSpaceship;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+
 import com.excelia.spaceships.application.mappers.CreateSpaceshipMapper;
 import com.excelia.spaceships.domain.command.CreateSpaceshipCommand;
 import com.excelia.spaceships.domain.entities.Spaceship;
@@ -10,12 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static com.junit.object_mothers.SpaceshipObjectMother.aSpaceship;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class CreateSpaceshipTest {
