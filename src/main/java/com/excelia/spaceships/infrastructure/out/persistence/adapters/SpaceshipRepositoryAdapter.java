@@ -1,5 +1,6 @@
 package com.excelia.spaceships.infrastructure.out.persistence.adapters;
 
+import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipPostgreMapper;
@@ -26,6 +27,7 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
 
     @Override
     public void delete(UUID spaceshipId) {
+        postgreRepository.findById(spaceshipId).orElseThrow(() -> new SpaceshipNotFoundException(spaceshipId));
         postgreRepository.deleteById(spaceshipId);
     }
 

@@ -1,6 +1,5 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.delete;
 
-import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
 import com.excelia.spaceships.domain.ports.in.DeleteSpaceshipPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,11 +17,7 @@ public class DeleteSpaceshipControllerImpl implements DeleteSpaceshipController 
     @Override
     public ResponseEntity<Void> delete(UUID spaceshipId) {
 
-        try {
-            deleteSpaceship.delete(spaceshipId);
-        } catch (SpaceshipNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        deleteSpaceship.delete(spaceshipId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
