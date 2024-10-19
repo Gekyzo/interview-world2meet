@@ -15,3 +15,7 @@ spring:
     compose:
       file: infra/database/compose.yaml
       lifecycle-management: start_only
+
+  mvc:
+    problemdetails:
+      enabled: true
