@@ -62,6 +62,13 @@ class GetSpaceshipControllerImplTest extends ControllerTest {
     }
 
     @Test
+    void given_NegativeSpaceshipIdInPathVariable_when_EndpointIsInvoked_then_ResponseIsBadRequest() throws Exception {
+
+        mockMvc.perform(get(GET_SPACESHIP_URI, aNegativeSpaceshipId()))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void given_InvalidGetSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsNotFound() throws Exception {
 
         var nonExistentSpaceshipId = aNonExistentSpaceshipId();
@@ -78,6 +85,10 @@ class GetSpaceshipControllerImplTest extends ControllerTest {
 
     private static String anInvalidSpaceshipId() {
         return "::Invalid UUID value::";
+    }
+
+    private static Integer aNegativeSpaceshipId() {
+        return -1;
     }
 
     private static UUID aNonExistentSpaceshipId() {
