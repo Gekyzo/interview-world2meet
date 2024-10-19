@@ -1,11 +1,11 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.post;
 
-import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.ports.in.CreateSpaceshipPort;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.CreateSpaceshipRestMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import java.net.URI;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,11 +17,17 @@ public class CreateSpaceshipControllerImpl implements CreateSpaceshipController 
     private final CreateSpaceshipRestMapper mapper;
 
     @Override
-    public ResponseEntity<CreateSpaceshipResponse> create(CreateSpaceshipRequest request) {
+    public ResponseEntity<URI> create(HttpServletRequest httpRequest, CreateSpaceshipRequest request) {
 
         UUID newSpaceshipId = UUID.randomUUID();
-        Spaceship spaceship = createSpaceship.create(mapper.toCommand(request, newSpaceshipId));
+        createSpaceship.create(mapper.toCommand(request, newSpaceshipId));
 
-        return new ResponseEntity<>(mapper.toResponse(spaceship), HttpStatus.CREATED);
+        String baseUrl = "%s://%s:%s".formatted(
+            httpRequest.getScheme(),
+            httpRequest.getServerName(),
+            httpRequest.getServerPort());
+        URI newSpaceshipUri = URI.create("%s/spaceships/%s".formatted(baseUrl, newSpaceshipId));
+
+        return ResponseEntity.created(newSpaceshipUri).build();
     }
 }

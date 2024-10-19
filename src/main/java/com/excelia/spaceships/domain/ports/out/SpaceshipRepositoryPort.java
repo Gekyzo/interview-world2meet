@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface SpaceshipRepositoryPort {
 
-    Spaceship create(Spaceship entity);
+    void create(Spaceship entity);
 
     void delete(UUID spaceshipId);
 

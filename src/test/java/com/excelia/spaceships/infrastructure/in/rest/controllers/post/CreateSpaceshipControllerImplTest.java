@@ -1,10 +1,8 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.post;
 
-import static com.junit.object_mothers.SpaceshipObjectMother.aSpaceship;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
+import static org.hamcrest.Matchers.matchesPattern;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.excelia.spaceships.domain.ports.in.CreateSpaceshipPort;
@@ -28,40 +26,28 @@ class CreateSpaceshipControllerImplTest extends ControllerTest {
     @Test
     void given_ValidCreateSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsCreated() throws Exception {
 
-        given(createSpaceship.create(any())).willReturn(aSpaceship());
-
-        var request = aValidCreateSpaceshipRequest();
         mockMvc.perform(post(CREATE_SPACESHIP_URI)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(request))
+                .content(aValidCreateSpaceshipRequest()))
             .andExpect(status().isCreated());
     }
 
     @Test
     void given_ValidCreateSpaceshipRequest_when_EndpointIsInvoked_then_ResponseMatchesExpected() throws Exception {
 
-        given(createSpaceship.create(any())).willReturn(aSpaceship());
-
-        var request = aValidCreateSpaceshipRequest();
         mockMvc
             .perform(post(CREATE_SPACESHIP_URI)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(request))
-            .andExpect(jsonPath("id").isString())
-            .andExpect(jsonPath("name").isString())
-            .andExpect(jsonPath("captain_name").isString())
-            .andExpect(jsonPath("length").isNumber())
-            .andExpect(jsonPath("max_speed").isNumber())
-            .andExpect(jsonPath("appears_in").isString());
+                .content(aValidCreateSpaceshipRequest()))
+            .andExpect(header().string("Location", matchesPattern(".*/spaceships/[0-9a-fA-F-]{36}")));
     }
 
     @Test
     void given_InvalidCreateSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsBadRequest() throws Exception {
 
-        var request = anInvalidCreateSpaceshipRequest();
         mockMvc.perform(post(CREATE_SPACESHIP_URI)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(request))
+                .content(anInvalidCreateSpaceshipRequest()))
             .andExpect(status().isBadRequest());
     }
 
