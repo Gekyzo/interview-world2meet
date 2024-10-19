@@ -9,12 +9,14 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import static com.excelia.spaceships.shared.MessageUtils.getMessageSource;
+
 @Slf4j
 @ControllerAdvice
 @AllArgsConstructor
 public class GlobalExceptionHandler {
 
-    private static final String PROBLEM_MESSAGE = "A problem has occurred '{}'. Request info: HTTP Method = {}, URI = {}";
+    private static final String PROBLEM_MESSAGE = "errors.problem.message";
 
     @ExceptionHandler(SpaceshipNotFoundException.class)
     public ProblemDetail spaceshipNotFoundExceptionHandler(HttpServletRequest request, Exception ex) {
@@ -29,7 +31,8 @@ public class GlobalExceptionHandler {
     }
 
     private static void logProblem(HttpServletRequest request, Exception ex) {
-        log.warn(PROBLEM_MESSAGE, ex.getMessage(), request.getMethod(), request.getRequestURI());
+        Object[] values = new Object[]{ex.getMessage(), request.getMethod(), request.getRequestURI()};
+        log.warn(getMessageSource(PROBLEM_MESSAGE, values));
     }
 
 }

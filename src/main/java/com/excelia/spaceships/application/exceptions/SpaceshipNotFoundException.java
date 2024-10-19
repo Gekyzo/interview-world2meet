@@ -1,20 +1,14 @@
 package com.excelia.spaceships.application.exceptions;
 
-import org.springframework.context.support.ResourceBundleMessageSource;
-
-import java.util.Locale;
 import java.util.UUID;
+
+import static com.excelia.spaceships.shared.MessageUtils.getMessageSource;
 
 public class SpaceshipNotFoundException extends RuntimeException {
 
-    protected static final String MESSAGE = "errors.spaceship.notfound";
-    protected static final ResourceBundleMessageSource MESSAGE_SOURCE = new ResourceBundleMessageSource();
-
-    static {
-        MESSAGE_SOURCE.setBasename("messages");
-    }
+    private static final String MESSAGE_KEY = "errors.spaceship.notfound";
 
     public SpaceshipNotFoundException(UUID spaceshipId) {
-        super(MESSAGE_SOURCE.getMessage(MESSAGE, new Object[]{spaceshipId}, Locale.getDefault()));
+        super(getMessageSource(MESSAGE_KEY, new Object[]{spaceshipId}));  // Use instance method
     }
 }
