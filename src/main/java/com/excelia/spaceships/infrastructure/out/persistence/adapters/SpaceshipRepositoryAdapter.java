@@ -51,8 +51,11 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
     @Override
     public Page<Spaceship> find(SearchSpaceshipQuery query, Pageable pageable) {
 
-        ExampleMatcher exampleMatcher = ExampleMatcher.matching().withIgnoreCase().withIgnoreNullValues()
-            .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+            .withIgnoreNullValues()
+            .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+            .withMatcher("captainName", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+            .withMatcher("appearsIn", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
 
         Example<SpaceshipPostgreModel> example = Example.of(mapper.queryToModel(query), exampleMatcher);
         return postgreRepository.findAll(example, pageable).map(mapper::toDomainEntity);
