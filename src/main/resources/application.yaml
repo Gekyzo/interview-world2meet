@@ -4,7 +4,7 @@ spring:
         name: spaceships
 
     datasource:
-        url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:public}
+        url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:private}
         username: ${DB_USER:postgres}
         password: ${DB_PASS:secret}
 

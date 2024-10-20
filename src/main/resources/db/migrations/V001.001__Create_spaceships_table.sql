@@ -1,4 +1,4 @@
-CREATE TABLE spaceships
+CREATE TABLE IF NOT EXISTS spaceships
 (
     id           UUID PRIMARY KEY,
     name         VARCHAR(255),
