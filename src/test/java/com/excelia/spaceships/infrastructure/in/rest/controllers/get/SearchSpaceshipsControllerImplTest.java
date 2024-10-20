@@ -36,7 +36,7 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
     @Test
     void given_ValidEmptyRequest_when_EndpointIsInvoked_then_ResponseIsOk() throws Exception {
 
-        given(findSpaceship.find(any())).willReturn(Page.empty());
+        given(findSpaceship.find(any(), any())).willReturn(Page.empty());
 
         mockMvc.perform(get(FIND_SPACESHIP_URI))
             .andExpect(status().isOk());
@@ -46,7 +46,7 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
     void given_ValidEmptyRequestAndSpaceshipsAreEmpty_when_EndpointIsInvoked_then_ResponseMatchesExpected()
         throws Exception {
 
-        given(findSpaceship.find(any())).willReturn(Page.empty());
+        given(findSpaceship.find(any(), any())).willReturn(Page.empty());
 
         mockMvc.perform(get(FIND_SPACESHIP_URI))
             // Page assertions
@@ -64,7 +64,7 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
         throws Exception {
 
         var content = Instancio.ofList(Spaceship.class).size(5).create();
-        given(findSpaceship.find(any())).willReturn(new PageImpl<>(content));
+        given(findSpaceship.find(any(), any())).willReturn(new PageImpl<>(content));
 
         mockMvc.perform(get(FIND_SPACESHIP_URI))
             // Page assertions
@@ -86,7 +86,7 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
     @Test
     void given_ValidSearchRequest_when_EndpointIsInvoked_then_ResponseIsOk() throws Exception {
 
-        given(findSpaceship.find(any())).willReturn(Page.empty());
+        given(findSpaceship.find(any(), any())).willReturn(Page.empty());
 
         var queryParams = aValidSearchRequest();
 
@@ -98,7 +98,7 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
     void given_ValidSearchRequestAndSpaceshipsAreEmpty_when_EndpointIsInvoked_then_ResponseMatchesExpected()
         throws Exception {
 
-        given(findSpaceship.find(any())).willReturn(Page.empty());
+        given(findSpaceship.find(any(), any())).willReturn(Page.empty());
 
         var queryParams = aValidSearchRequest();
 
@@ -122,7 +122,7 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
             .generate(field(Spaceship::getName), gen -> gen.oneOf("X-Wing", "Y-Wing"))
             .create();
 
-        given(findSpaceship.find(any())).willReturn(new PageImpl<>(content));
+        given(findSpaceship.find(any(), any())).willReturn(new PageImpl<>(content));
 
         var queryParams = aValidSearchRequest();
 

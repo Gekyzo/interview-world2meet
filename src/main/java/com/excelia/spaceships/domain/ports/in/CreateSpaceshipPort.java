@@ -1,6 +1,6 @@
 package com.excelia.spaceships.domain.ports.in;
 
-import com.excelia.spaceships.domain.command.CreateSpaceshipCommand;
+import com.excelia.spaceships.domain.commands.CreateSpaceshipCommand;
 
 public interface CreateSpaceshipPort {
 

@@ -1,6 +1,6 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.put;
 
-import com.excelia.spaceships.domain.command.ModifySpaceshipCommand;
+import com.excelia.spaceships.domain.commands.ModifySpaceshipCommand;
 import com.excelia.spaceships.domain.ports.in.ModifySpaceshipPort;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.ModifySpaceshipRestMapper;
 import java.util.UUID;

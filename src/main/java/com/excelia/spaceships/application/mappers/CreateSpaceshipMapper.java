@@ -1,6 +1,6 @@
 package com.excelia.spaceships.application.mappers;
 
-import com.excelia.spaceships.domain.command.CreateSpaceshipCommand;
+import com.excelia.spaceships.domain.commands.CreateSpaceshipCommand;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import org.springframework.stereotype.Component;
 

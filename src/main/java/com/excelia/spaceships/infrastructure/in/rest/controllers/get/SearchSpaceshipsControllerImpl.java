@@ -1,6 +1,7 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.get;
 
 import com.excelia.spaceships.domain.ports.in.FindSpaceshipPort;
+import com.excelia.spaceships.domain.queries.SearchSpaceshipQuery;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.SearchSpaceshipRestMapper;
 import com.excelia.spaceships.shared.PagedResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,9 @@ public class SearchSpaceshipsControllerImpl implements SearchSpaceshipsControlle
         Pageable pageable
     ) {
 
-        Page<SearchSpaceshipResponse> responsePage = findSpaceship.find(pageable).map(mapper::toResponse);
+        SearchSpaceshipQuery query = mapper.toQuery(request);
+
+        Page<SearchSpaceshipResponse> responsePage = findSpaceship.find(query, pageable).map(mapper::toResponse);
 
         PagedResponse<SearchSpaceshipResponse> pagedResponse = new PagedResponse<>(
             responsePage.getContent(),

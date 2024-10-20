@@ -1,6 +1,6 @@
 package com.excelia.spaceships.infrastructure.in.rest.mappers;
 
-import com.excelia.spaceships.domain.command.ModifySpaceshipCommand;
+import com.excelia.spaceships.domain.commands.ModifySpaceshipCommand;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.infrastructure.in.rest.controllers.put.ModifySpaceshipRequest;
 import com.excelia.spaceships.infrastructure.in.rest.controllers.put.ModifySpaceshipResponse;

@@ -1,4 +1,4 @@
-package com.excelia.spaceships.domain.command;
+package com.excelia.spaceships.domain.commands;
 
 import java.util.UUID;
 

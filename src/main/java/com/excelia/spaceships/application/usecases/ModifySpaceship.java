@@ -1,7 +1,7 @@
 package com.excelia.spaceships.application.usecases;
 
 import com.excelia.spaceships.application.mappers.ModifySpaceshipMapper;
-import com.excelia.spaceships.domain.command.ModifySpaceshipCommand;
+import com.excelia.spaceships.domain.commands.ModifySpaceshipCommand;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.ports.in.ModifySpaceshipPort;
 import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;

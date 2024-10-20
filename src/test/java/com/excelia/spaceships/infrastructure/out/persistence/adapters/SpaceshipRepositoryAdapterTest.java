@@ -11,6 +11,7 @@ import static org.mockito.Mockito.verify;
 
 import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
 import com.excelia.spaceships.domain.entities.Spaceship;
+import com.excelia.spaceships.domain.queries.SearchSpaceshipQuery;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipPostgreMapper;
 import com.excelia.spaceships.infrastructure.out.persistence.model.SpaceshipPostgreModel;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipPostgreRepository;
@@ -51,11 +52,15 @@ class SpaceshipRepositoryAdapterTest {
     private SpaceshipRepositoryAdapter sut;
 
     private UUID anExistingSpaceshipId;
+    private List<SpaceshipPostgreModel> existingSpaceships;
 
     @BeforeEach
     void setUp() {
         this.sut = new SpaceshipRepositoryAdapter(postgreRepository, mapper);
-        populateSpaceshipsTable();
+        var spaceships = buildSpaceshipObjects();
+        postgreRepository.saveAll(spaceships);
+        anExistingSpaceshipId = spaceships.stream().findFirst().map(SpaceshipPostgreModel::getId).orElse(null);
+        existingSpaceships = spaceships;
     }
 
     @Nested
@@ -150,18 +155,52 @@ class SpaceshipRepositoryAdapterTest {
     @Nested
     class TestFindSpaceshipMethod {
 
+        @Test
+        void given_EmptyFindCriteria_when_FindIsInvoked_then_RepositoryIsInvoked() {
+            var query = new SearchSpaceshipQuery();
+            var pageable = Pageable.unpaged();
+
+            sut.find(query, pageable);
+
+            verify(postgreRepository).findAll(pageable);
+        }
+
+        @Test
+        void given_EmptyFindCriteria_when_FindIsInvoked_then_RepositoryReturnsRecords() {
+            var query = new SearchSpaceshipQuery();
+            var pageable = Pageable.unpaged();
+
+            var result = sut.find(query, pageable);
+
+            assertThat(result).isNotEmpty();
+        }
+
+        @Test
+        void given_FindByExistingIdCriteria_when_FindIsInvoked_then_RepositoryReturnsRecords() {
+            var query = SearchSpaceshipQuery.builder().id(anExistingSpaceshipId).build();
+            var pageable = Pageable.unpaged();
+
+            var result = sut.find(query, pageable);
+
+            assertThat(result).size().isEqualTo(1);
+        }
+
+        @Test
+        void given_FindByExistingNameCriteria_when_FindIsInvoked_then_RepositoryReturnsRecords() {
+            var expectedSpaceships = spaceshipsWithWingOnTheirName().toArray(new Spaceship[]{});
+            var query = SearchSpaceshipQuery.builder().name("wing").build();
+            var pageable = Pageable.unpaged();
+
+            var result = sut.find(query, pageable);
+
+            assertThat(result)
+                .hasSize(expectedSpaceships.length)
+                .containsExactlyInAnyOrder(expectedSpaceships);
+        }
+
     }
 
-    @Test
-    void given_DatabaseContainsSpaceship_when_FindSpaceshipIsInvokedUnpaged_then_RepositoryReturnsRecords() {
-        var pageable = Pageable.unpaged();
-
-        var result = sut.find(pageable);
-
-        assertThat(result).isNotEmpty();
-    }
-
-    private void populateSpaceshipsTable() {
+    private List<SpaceshipPostgreModel> buildSpaceshipObjects() {
         List<SpaceshipPostgreModel> spaceships = new ArrayList<>();
 
         spaceships.addAll(Instancio.ofList(SpaceshipPostgreModel.class)
@@ -175,9 +214,14 @@ class SpaceshipRepositoryAdapterTest {
                 gen -> gen.oneOf("Millennium Falcon", "USS Enterprise", "Battlestar Galactica"))
             .create());
 
-        postgreRepository.saveAll(spaceships);
+        return spaceships;
+    }
 
-        anExistingSpaceshipId = spaceships.stream().findFirst().map(SpaceshipPostgreModel::getId).orElse(null);
+    private List<Spaceship> spaceshipsWithWingOnTheirName() {
+        return existingSpaceships.stream()
+            .filter(s -> s.getName().toLowerCase().contains("wing"))
+            .map(mapper::toDomainEntity)
+            .toList();
     }
 
 }

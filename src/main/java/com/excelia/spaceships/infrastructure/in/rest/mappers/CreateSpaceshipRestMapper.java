@@ -1,6 +1,6 @@
 package com.excelia.spaceships.infrastructure.in.rest.mappers;
 
-import com.excelia.spaceships.domain.command.CreateSpaceshipCommand;
+import com.excelia.spaceships.domain.commands.CreateSpaceshipCommand;
 import com.excelia.spaceships.infrastructure.in.rest.controllers.post.CreateSpaceshipRequest;
 import java.util.UUID;
 import org.springframework.stereotype.Component;

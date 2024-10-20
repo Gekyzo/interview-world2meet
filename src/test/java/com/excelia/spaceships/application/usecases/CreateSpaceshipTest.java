@@ -7,7 +7,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 import com.excelia.spaceships.application.mappers.CreateSpaceshipMapper;
-import com.excelia.spaceships.domain.command.CreateSpaceshipCommand;
+import com.excelia.spaceships.domain.commands.CreateSpaceshipCommand;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
 import org.instancio.Instancio;

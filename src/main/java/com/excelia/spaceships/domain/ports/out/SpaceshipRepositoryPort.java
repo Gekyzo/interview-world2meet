@@ -1,11 +1,11 @@
 package com.excelia.spaceships.domain.ports.out;
 
 import com.excelia.spaceships.domain.entities.Spaceship;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
+import com.excelia.spaceships.domain.queries.SearchSpaceshipQuery;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface SpaceshipRepositoryPort {
 
@@ -17,5 +17,5 @@ public interface SpaceshipRepositoryPort {
 
     Optional<Spaceship> update(Spaceship entity);
 
-    Page<Spaceship> find(Pageable pageable);
+    Page<Spaceship> find(SearchSpaceshipQuery query, Pageable pageable);
 }
