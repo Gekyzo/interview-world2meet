@@ -53,10 +53,10 @@ class ModifySpaceshipControllerImplTest extends ControllerTest {
                 .content(request))
             .andExpect(jsonPath("id", matchesPattern("[0-9a-fA-F-]{36}")))
             .andExpect(jsonPath("name").isString())
-            .andExpect(jsonPath("captain_name").isString())
+            .andExpect(jsonPath("captainName").isString())
             .andExpect(jsonPath("length").isNumber())
-            .andExpect(jsonPath("max_speed").isNumber())
-            .andExpect(jsonPath("appears_in").isString());
+            .andExpect(jsonPath("maxSpeed").isNumber())
+            .andExpect(jsonPath("appearsIn").isString());
     }
 
     @Test
@@ -106,10 +106,10 @@ class ModifySpaceshipControllerImplTest extends ControllerTest {
         return """
             {
               "name": "Millennium Falcon",
-              "captain_name": "Han Solo",
+              "captainName": "Han Solo",
               "length": 34.75,
-              "max_speed": 1050,
-              "appears_in": "Star Wars"
+              "maxSpeed": 1050,
+              "appearsIn": "Star Wars"
             }
             """;
     }
@@ -118,10 +118,10 @@ class ModifySpaceshipControllerImplTest extends ControllerTest {
         return """
             {
               "name": "Millennium Falcon",
-              "captain_name": "Han Solo",
+              "captainName": "Han Solo",
               "length": true,
-              "max_speed": 1050,
-              "appears_in": "Star Wars"
+              "maxSpeed": 1050,
+              "appearsIn": "Star Wars"
             }
             """;
     }

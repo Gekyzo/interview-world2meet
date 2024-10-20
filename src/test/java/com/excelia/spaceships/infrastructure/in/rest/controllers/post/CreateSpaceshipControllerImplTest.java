@@ -55,10 +55,10 @@ class CreateSpaceshipControllerImplTest extends ControllerTest {
         return """
             {
               "name": "Millennium Falcon",
-              "captain_name": "Han Solo",
+              "captainName": "Han Solo",
               "length": 34.75,
-              "max_speed": 1050,
-              "appears_in": "Star Wars"
+              "maxSpeed": 1050,
+              "appearsIn": "Star Wars"
             }
             """;
     }
@@ -67,10 +67,10 @@ class CreateSpaceshipControllerImplTest extends ControllerTest {
         return """
             {
               "name": "Millennium Falcon",
-              "captain_name": "Han Solo",
+              "captainName": "Han Solo",
               "length": true,
-              "max_speed": 1050,
-              "appears_in": "Star Wars"
+              "maxSpeed": 1050,
+              "appearsIn": "Star Wars"
             }
             """;
     }

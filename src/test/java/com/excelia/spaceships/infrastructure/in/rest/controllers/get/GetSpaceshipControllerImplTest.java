@@ -51,7 +51,7 @@ class GetSpaceshipControllerImplTest extends ControllerTest {
             .andExpect(jsonPath("captainName").isString())
             .andExpect(jsonPath("length").isNumber())
             .andExpect(jsonPath("maxSpeed").isNumber())
-            .andExpect(jsonPath("appears_in").isString());
+            .andExpect(jsonPath("appearsIn").isString());
     }
 
     @Test
