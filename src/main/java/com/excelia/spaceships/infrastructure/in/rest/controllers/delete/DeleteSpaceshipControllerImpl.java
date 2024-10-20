@@ -18,6 +18,6 @@ public class DeleteSpaceshipControllerImpl implements DeleteSpaceshipController 
 
         deleteSpaceship.delete(spaceshipId);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }
