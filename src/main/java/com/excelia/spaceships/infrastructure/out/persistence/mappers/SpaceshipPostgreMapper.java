@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpaceshipPostgreMapper {
 
-    public SpaceshipPostgreModel toPostgreEntity(Spaceship source) {
+    public SpaceshipPostgreModel toPostgreModel(Spaceship source) {
 
         return SpaceshipPostgreModel.builder()
             .id(source.getId())

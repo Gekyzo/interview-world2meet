@@ -6,3 +6,6 @@ spring:
 
     datasource:
         url: jdbc:tc:postgresql:///
+
+    flyway:
+        locations: classpath:db/migrations

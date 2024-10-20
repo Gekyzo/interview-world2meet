@@ -5,7 +5,7 @@ import org.instancio.Instancio;
 
 public final class SpaceshipPostgreObjectMother {
 
-    public static SpaceshipPostgreModel aSpaceshipPostgreEntity() {
+    public static SpaceshipPostgreModel aSpaceshipPostgreModel() {
         return Instancio.of(SpaceshipPostgreModel.class).create();
     }
 
