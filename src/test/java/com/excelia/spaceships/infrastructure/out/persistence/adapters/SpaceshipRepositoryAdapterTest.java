@@ -1,13 +1,10 @@
 package com.excelia.spaceships.infrastructure.out.persistence.adapters;
 
-import static com.junit.object_mothers.SpaceshipObjectMother.aSpaceship;
-import static com.junit.object_mothers.SpaceshipPostgreObjectMother.aSpaceshipPostgreModel;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.instancio.Select.field;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
@@ -24,7 +21,6 @@ import java.util.stream.Stream;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -83,32 +79,6 @@ class SpaceshipRepositoryAdapterTest {
             sut.create(entity);
 
             verify(postgreRepository).save(any(SpaceshipPostgreModel.class));
-        }
-
-        @Test
-        @Disabled("Infrastructure adapter no longer returns the domain object")
-        void given_DomainEntity_when_CreateIsInvoked_then_MapperToDomainIsInvoked() {
-            given(mapper.toPostgreModel(any())).willReturn(aSpaceshipPostgreModel());
-            given(postgreRepository.save(any())).willReturn(aSpaceshipPostgreModel());
-            var entity = Instancio.of(Spaceship.class).create();
-
-            sut.create(entity);
-
-            verify(mapper).toDomainEntity(any(SpaceshipPostgreModel.class));
-        }
-
-        @Test
-        @Disabled("Infrastructure adapter no longer returns the domain object")
-        void given_DomainEntity_when_CreateIsInvoked_then_ReturnsSpaceship() {
-            given(mapper.toPostgreModel(any())).willReturn(aSpaceshipPostgreModel());
-            given(mapper.toDomainEntity(any())).willReturn(aSpaceship());
-            given(postgreRepository.save(any())).willReturn(aSpaceshipPostgreModel());
-            // var entity = Instancio.of(Spaceship.class).create();
-
-            // var result = sut.create(entity);
-
-            // assertThat(result).isNotNull();
-            verify(postgreRepository).save(aSpaceshipPostgreModel());
         }
 
     }
