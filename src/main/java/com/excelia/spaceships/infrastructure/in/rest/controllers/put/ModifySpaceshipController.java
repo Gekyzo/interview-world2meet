@@ -16,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface ModifySpaceshipController {
 
     @Operation(summary = "Update a spaceship values")
-    @PutMapping(value = "{spaceship-id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "{spaceshipId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ModifySpaceshipResponse> modify(
-        @Parameter(example = "123e4567-e89b-12d3-a456-426614174000")
-        @PathVariable(name = "spaceship-id")
-        UUID spaceshipId,
+        @Parameter(example = "123e4567-e89b-12d3-a456-426614174000") @PathVariable UUID spaceshipId,
         @RequestBody ModifySpaceshipRequest request
     );
 

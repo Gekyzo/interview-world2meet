@@ -18,7 +18,7 @@ class DeleteSpaceshipControllerImplTest extends ControllerTest {
     @MockBean
     private DeleteSpaceshipPort deleteSpaceship;
 
-    private static final String DELETE_SPACESHIP_URI = "/spaceships/{spaceship-id}";
+    private static final String DELETE_SPACESHIP_URI = "/spaceships/{spaceshipId}";
 
     @Test
     void given_ValidDeleteSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsNoContent() throws Exception {

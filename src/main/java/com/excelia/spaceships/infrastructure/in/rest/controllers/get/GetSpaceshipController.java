@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/spaceships")
 public interface GetSpaceshipController {
 
-    @Operation(summary = "Retrieves a spaceship by spaceship-id")
-    @GetMapping(value = "{spaceship-id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Retrieves a spaceship by spaceshipId")
+    @GetMapping(value = "{spaceshipId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<GetSpaceshipResponse> get(
-        @Parameter(example = "123e4567-e89b-12d3-a456-426614174000")
-        @PathVariable(name = "spaceship-id")
-        UUID spaceshipId
+        @Parameter(example = "123e4567-e89b-12d3-a456-426614174000") @PathVariable UUID spaceshipId
     );
 
 }

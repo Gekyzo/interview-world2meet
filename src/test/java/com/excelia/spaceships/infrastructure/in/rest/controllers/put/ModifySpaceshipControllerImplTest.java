@@ -1,6 +1,7 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.put;
 
 import static com.junit.object_mothers.SpaceshipObjectMother.aSpaceship;
+import static org.hamcrest.Matchers.matchesPattern;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -25,7 +26,7 @@ class ModifySpaceshipControllerImplTest extends ControllerTest {
     @MockBean
     private ModifySpaceshipPort modifySpaceship;
 
-    private static final String MODIFY_SPACESHIP_URI = "/spaceships/{spaceship-id}";
+    private static final String MODIFY_SPACESHIP_URI = "/spaceships/{spaceshipId}";
 
     @Test
     void given_ValidModifySpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsOk() throws Exception {
@@ -50,7 +51,7 @@ class ModifySpaceshipControllerImplTest extends ControllerTest {
         mockMvc.perform(put(MODIFY_SPACESHIP_URI, aValidSpaceshipId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(request))
-            .andExpect(jsonPath("id").isString())
+            .andExpect(jsonPath("id", matchesPattern("[0-9a-fA-F-]{36}")))
             .andExpect(jsonPath("name").isString())
             .andExpect(jsonPath("captain_name").isString())
             .andExpect(jsonPath("length").isNumber())

@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface DeleteSpaceshipController {
 
     @Operation(summary = "Delete a spaceship")
-    @DeleteMapping("{spaceship-id}")
+    @DeleteMapping("{spaceshipId}")
     ResponseEntity<Void> delete(
-        @Parameter(example = "123e4567-e89b-12d3-a456-426614174000")
-        @PathVariable(name = "spaceship-id")
-        UUID spaceshipId
-    );
+        @Parameter(example = "123e4567-e89b-12d3-a456-426614174000") @PathVariable UUID spaceshipId);
 
 }

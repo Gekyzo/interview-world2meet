@@ -1,6 +1,7 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.get;
 
 import static com.junit.object_mothers.SpaceshipObjectMother.aSpaceship;
+import static org.hamcrest.Matchers.matchesPattern;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -23,7 +24,7 @@ class GetSpaceshipControllerImplTest extends ControllerTest {
     @MockBean
     private FindSpaceshipPort findSpaceship;
 
-    private static final String GET_SPACESHIP_URI = "/spaceships/{spaceship-id}";
+    private static final String GET_SPACESHIP_URI = "/spaceships/{spaceshipId}";
 
     @Test
     void given_ValidGetSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsOk() throws Exception {
@@ -45,11 +46,11 @@ class GetSpaceshipControllerImplTest extends ControllerTest {
 
         mockMvc
             .perform(get(GET_SPACESHIP_URI, validSpaceshipId))
-            .andExpect(jsonPath("id").isString())
+            .andExpect(jsonPath("id", matchesPattern("[0-9a-fA-F-]{36}")))
             .andExpect(jsonPath("name").isString())
-            .andExpect(jsonPath("captain_name").isString())
+            .andExpect(jsonPath("captainName").isString())
             .andExpect(jsonPath("length").isNumber())
-            .andExpect(jsonPath("max_speed").isNumber())
+            .andExpect(jsonPath("maxSpeed").isNumber())
             .andExpect(jsonPath("appears_in").isString());
     }
 
