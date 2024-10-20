@@ -14,8 +14,6 @@ import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.ports.in.FindSpaceshipPort;
 import com.excelia.spaceships.infrastructure.in.rest.controllers.ControllerTest;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.SearchSpaceshipRestMapper;
-import java.util.ArrayList;
-import java.util.List;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,6 +21,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 @Import({SearchSpaceshipRestMapper.class})
 @WebMvcTest(controllers = {SearchSpaceshipsControllerImpl.class})
@@ -88,9 +88,9 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
 
         given(findSpaceship.find(any())).willReturn(Page.empty());
 
-        var request = aValidSearchRequest();
+        var queryParams = aValidSearchRequest();
 
-        mockMvc.perform(get(FIND_SPACESHIP_URI, request))
+        mockMvc.perform(get(FIND_SPACESHIP_URI).queryParams(queryParams))
             .andExpect(status().isOk());
     }
 
@@ -100,9 +100,9 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
 
         given(findSpaceship.find(any())).willReturn(Page.empty());
 
-        var request = aValidSearchRequest();
+        var queryParams = aValidSearchRequest();
 
-        mockMvc.perform(get(FIND_SPACESHIP_URI, request))
+        mockMvc.perform(get(FIND_SPACESHIP_URI).queryParams(queryParams))
             // Page assertions
             .andExpect(jsonPath("page").exists())
             .andExpect(jsonPath("$.page.size").value(0))
@@ -117,24 +117,16 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
     void given_ValidSearchRequestAndSpaceshipsAreNotEmpty_when_EndpointIsInvoked_then_ResponseMatchesExpected()
         throws Exception {
 
-        List<Spaceship> content = new ArrayList<>();
-
-        content.addAll(Instancio.ofList(Spaceship.class)
+        var content = Instancio.ofList(Spaceship.class)
             .size(2)
-            .generate(field(Spaceship::getName), gen -> gen.oneOf("X-Wing"))
-            .create());
-
-        content.addAll(Instancio.ofList(Spaceship.class)
-            .size(3)
-            .generate(field(Spaceship::getName),
-                gen -> gen.oneOf("Millennium Falcon", "USS Enterprise", "Battlestar Galactica"))
-            .create());
+            .generate(field(Spaceship::getName), gen -> gen.oneOf("X-Wing", "Y-Wing"))
+            .create();
 
         given(findSpaceship.find(any())).willReturn(new PageImpl<>(content));
 
-        var request = aValidSearchRequest();
+        var queryParams = aValidSearchRequest();
 
-        mockMvc.perform(get(FIND_SPACESHIP_URI, request))
+        mockMvc.perform(get(FIND_SPACESHIP_URI).queryParams(queryParams))
             // Page assertions
             .andExpect(jsonPath("page").exists())
             .andExpect(jsonPath("$.page.size").value(2))
@@ -151,8 +143,11 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
             .andExpect(jsonPath("$.content[*].appearsIn", everyItem(isA(String.class))));
     }
 
-    private static String aValidSearchRequest() {
-        return "name=wing";
+    private static MultiValueMap<String, String> aValidSearchRequest() {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("name", "wing");
+
+        return queryParams;
     }
 
 }
