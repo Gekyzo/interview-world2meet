@@ -30,6 +30,8 @@
         <java.version>23</java.version>
         <springdoc.openapi.version>2.3.0</springdoc.openapi.version>
         <instancio.version>5.0.2</instancio.version>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <maven.compiler.proc>full</maven.compiler.proc>
     </properties>
     <dependencies>
 
@@ -121,6 +123,15 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>
