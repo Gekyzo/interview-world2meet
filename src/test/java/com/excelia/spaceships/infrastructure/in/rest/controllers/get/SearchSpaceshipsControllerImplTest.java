@@ -3,6 +3,7 @@ package com.excelia.spaceships.infrastructure.in.rest.controllers.get;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.isA;
 import static org.hamcrest.Matchers.matchesPattern;
+import static org.instancio.Select.field;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,6 +14,8 @@ import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.ports.in.FindSpaceshipPort;
 import com.excelia.spaceships.infrastructure.in.rest.controllers.ControllerTest;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.SearchSpaceshipRestMapper;
+import java.util.ArrayList;
+import java.util.List;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -114,7 +117,19 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
     void given_ValidSearchRequestAndSpaceshipsAreNotEmpty_when_EndpointIsInvoked_then_ResponseMatchesExpected()
         throws Exception {
 
-        var content = Instancio.ofList(Spaceship.class).size(5).create();
+        List<Spaceship> content = new ArrayList<>();
+
+        content.addAll(Instancio.ofList(Spaceship.class)
+            .size(2)
+            .generate(field(Spaceship::getName), gen -> gen.oneOf("X-Wing"))
+            .create());
+
+        content.addAll(Instancio.ofList(Spaceship.class)
+            .size(3)
+            .generate(field(Spaceship::getName),
+                gen -> gen.oneOf("Millennium Falcon", "USS Enterprise", "Battlestar Galactica"))
+            .create());
+
         given(findSpaceship.find(any())).willReturn(new PageImpl<>(content));
 
         var request = aValidSearchRequest();
@@ -122,8 +137,8 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
         mockMvc.perform(get(FIND_SPACESHIP_URI, request))
             // Page assertions
             .andExpect(jsonPath("page").exists())
-            .andExpect(jsonPath("$.page.size").value(5))
-            .andExpect(jsonPath("$.page.totalElements").value(5))
+            .andExpect(jsonPath("$.page.size").value(2))
+            .andExpect(jsonPath("$.page.totalElements").value(2))
             .andExpect(jsonPath("$.page.totalPages").value(1))
             .andExpect(jsonPath("$.page.number").value(0))
             // Content assertions
@@ -137,7 +152,7 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
     }
 
     private static String aValidSearchRequest() {
-        return "name=Falcon";
+        return "name=wing";
     }
 
 }
