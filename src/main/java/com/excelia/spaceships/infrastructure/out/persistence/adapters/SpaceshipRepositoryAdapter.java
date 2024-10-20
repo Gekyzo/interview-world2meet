@@ -19,9 +19,9 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
     private final SpaceshipPostgreMapper mapper;
 
     @Override
-    public Spaceship create(Spaceship entity) {
+    public void create(Spaceship entity) {
         SpaceshipPostgreModel model = mapper.toPostgreEntity(entity);
-        return mapper.toDomainEntity(postgreRepository.save(model));
+        postgreRepository.save(model);
     }
 
     @Override
