@@ -29,6 +29,7 @@
     <properties>
         <java.version>23</java.version>
         <springdoc.openapi.version>2.3.0</springdoc.openapi.version>
+        <springdoc.openapi.ui.version>1.7.0</springdoc.openapi.ui.version>
         <instancio.version>5.0.2</instancio.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven.compiler.proc>full</maven.compiler.proc>
@@ -68,6 +69,12 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc.openapi.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc.openapi.ui.version}</version>
         </dependency>
 
         <!-- Database -->

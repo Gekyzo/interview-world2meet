@@ -9,3 +9,13 @@
 | DB_USER     | Usuario de acceso a la base de datos    | `postgres`        |
 | DB_PASS     | Contraseña de acceso a la base de datos | `secret`          |
 
+## OpenAPI
+
+Rutas de acceso a los swagger del servicio:
+
+|                |                                      |
+| -------------- | ------------------------------------ |
+| Formato web UI | `<SERVER_URL>/swagger-ui/index.html` |
+| Formato JSON   | `<SERVER_URL>/v3/api-docs`           |
+| Formato YAML   | `<SERVER_URL>/v3/api-docs.yaml`      |
+
