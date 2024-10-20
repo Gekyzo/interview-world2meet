@@ -9,6 +9,8 @@ import com.excelia.spaceships.infrastructure.out.persistence.repositories.Spaces
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -41,5 +43,10 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
         return postgreRepository
             .findById(entity.getId())
             .map(_ -> mapper.toDomainEntity(postgreRepository.save(model)));
+    }
+
+    @Override
+    public Page<Spaceship> find(Pageable pageable) {
+        return postgreRepository.findAll(pageable).map(mapper::toDomainEntity);
     }
 }
