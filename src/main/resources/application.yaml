@@ -4,21 +4,25 @@ spring:
         name: spaceships
 
     datasource:
-        url: jdbc:postgresql://localhost:5432/excelia
-        username: postgres
-        password: secret
+        url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:public}
+        username: ${DB_USER:postgres}
+        password: ${DB_PASS:secret}
 
     flyway:
         locations: classpath:db/migrations
+        table: schema_history
 
     jpa:
         open-in-view: false # to disable unnecessary log warning
 
     docker:
         compose:
-            file: infra/database/compose.yaml
+            file: compose-database.yaml
             lifecycle-management: start_only
 
     mvc:
         problemdetails:
             enabled: true
+
+server:
+    port: ${SERVER_PORT:8080}
