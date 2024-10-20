@@ -10,6 +10,8 @@ import com.excelia.spaceships.infrastructure.out.persistence.repositories.Spaces
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -30,17 +32,20 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
     }
 
     @Override
+    @CacheEvict(value = "spaceshipById", key = "#spaceshipId")
     public void delete(UUID spaceshipId) {
         postgreRepository.findById(spaceshipId).orElseThrow(() -> new SpaceshipNotFoundException(spaceshipId));
         postgreRepository.deleteById(spaceshipId);
     }
 
     @Override
+    @Cacheable(value = "spaceshipById", key = "#spaceshipId")
     public Optional<Spaceship> findById(UUID spaceshipId) {
         return postgreRepository.findById(spaceshipId).map(mapper::toDomainEntity);
     }
 
     @Override
+    @CacheEvict(value = "spaceshipById", allEntries = true)
     public Optional<Spaceship> update(Spaceship entity) {
         SpaceshipPostgreModel model = mapper.toPostgreModel(entity);
         return postgreRepository
