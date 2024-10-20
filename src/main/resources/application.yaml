@@ -11,6 +11,9 @@ spring:
     flyway:
         locations: classpath:db/migrations
 
+    jpa:
+        open-in-view: false # to disable unnecessary log warning
+
     docker:
         compose:
             file: infra/database/compose.yaml
