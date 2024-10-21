@@ -30,9 +30,9 @@ public class CreateSpaceshipEvent extends EventCommand {
 
     @Override
     public String toString() {
-        return super.toString() + "[id=%s, name=%s, captainName=%s, length=%s, maxSpeed=%s, appearsIn=%s])".formatted(id,
-            name, captainName,
-            length, maxSpeed, appearsIn);
+
+        return "CreateSpaceshipEvent([id=%s, name=%s, captainName=%s, length=%s, maxSpeed=%s, appearsIn=%s], %s)".formatted(
+            id, name, captainName, length, maxSpeed, appearsIn, super.toString());
     }
 
 }
