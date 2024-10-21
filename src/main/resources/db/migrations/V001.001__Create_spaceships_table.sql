@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS spaceships
     captain_name VARCHAR(255),
     length       DOUBLE PRECISION,
     max_speed    INTEGER,
-    appears_in   VARCHAR(255)
+    appears_in   VARCHAR(255),
+    CONSTRAINT uq_name UNIQUE (name)
 );
