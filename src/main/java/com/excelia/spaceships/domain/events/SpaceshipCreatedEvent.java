@@ -19,7 +19,7 @@ public class SpaceshipCreatedEvent extends EventFact {
     @Override
     public String toString() {
 
-        return "SpaceshipCreatedFact([spaceshipId=%s], %s)".formatted(spaceshipId, super.toString());
+        return "SpaceshipCreatedFact(Payload[spaceshipId=%s], %s)".formatted(spaceshipId, super.toString());
     }
 
 }

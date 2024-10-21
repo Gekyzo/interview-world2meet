@@ -11,6 +11,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Slf4j
@@ -23,7 +24,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SpaceshipNotFoundException.class)
     public ProblemDetail spaceshipNotFoundExceptionHandler(HttpServletRequest request, Exception ex) {
         logProblem(request, ex);
-        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        return ProblemDetail.forStatusAndDetail(getResponseStatus(ex.getClass()), ex.getMessage());
     }
 
     @ExceptionHandler({
@@ -44,6 +45,11 @@ public class GlobalExceptionHandler {
     private static void logProblem(HttpServletRequest request, Exception ex) {
         Object[] values = new Object[]{ex.getMessage(), request.getMethod(), request.getRequestURI()};
         log.warn(getMessageSource(PROBLEM_MESSAGE, values));
+    }
+
+    private static HttpStatus getResponseStatus(Class<?> exceptionClass) {
+        ResponseStatus responseStatus = exceptionClass.getAnnotation(ResponseStatus.class);
+        return (responseStatus != null) ? responseStatus.value() : HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
 }
