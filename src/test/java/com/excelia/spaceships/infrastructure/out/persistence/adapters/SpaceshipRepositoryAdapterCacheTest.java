@@ -5,7 +5,9 @@ import static org.instancio.Select.field;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.excelia.spaceships.domain.entities.Media;
 import com.excelia.spaceships.domain.entities.Spaceship;
+import com.excelia.spaceships.domain.ports.out.MediaRepositoryPort;
 import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipPostgreRepository;
 import java.util.Optional;
@@ -29,18 +31,26 @@ class SpaceshipRepositoryAdapterCacheTest {
     private CacheManager cacheManager;
 
     @Autowired
-    private SpaceshipRepositoryPort repositoryPort;
+    private SpaceshipRepositoryPort spaceshipRepo;
 
     @SpyBean
     private SpaceshipPostgreRepository postgreRepository;
+
+    @Autowired
+    private MediaRepositoryPort mediaRepo;
 
     private final UUID aSpaceshipId = UUID.randomUUID();
 
     @BeforeEach
     void setUp() {
+        var aMedia = Instancio.of(Media.class).create();
+        mediaRepo.create(aMedia);
+
         var aSpaceship = Instancio.of(Spaceship.class)
-            .set(field(Spaceship::getId), aSpaceshipId).create();
-        repositoryPort.create(aSpaceship);
+            .set(field(Spaceship::getId), aSpaceshipId)
+            .set(field(Spaceship::getMedia), aMedia)
+            .create();
+        spaceshipRepo.create(aSpaceship);
     }
 
     @AfterEach
@@ -51,14 +61,14 @@ class SpaceshipRepositoryAdapterCacheTest {
 
     @Test
     void given_AnExistingSpaceship_when_PortIsInvoked_then_DatabaseIsInvokedOnlyOnce() {
-        repositoryPort.findById(aSpaceshipId);
+        spaceshipRepo.findById(aSpaceshipId);
 
         verify(postgreRepository, times(1)).findById(aSpaceshipId);
     }
 
     @Test
     void given_AnExistingSpaceship_when_PortIsInvoked_then_CacheStoresDatabaseItem() {
-        var anExistingSpaceship = repositoryPort.findById(aSpaceshipId);
+        var anExistingSpaceship = spaceshipRepo.findById(aSpaceshipId);
 
         var expectedSpaceship = getCachedSpaceship(aSpaceshipId);
         assertThat(anExistingSpaceship).isEqualTo(expectedSpaceship);
@@ -66,9 +76,9 @@ class SpaceshipRepositoryAdapterCacheTest {
 
     @Test
     void given_AnExistingSpaceship_when_PortIsInvokedMultipleTimes_then_DatabaseIsInvokedOnlyOnce() {
-        repositoryPort.findById(aSpaceshipId);
-        repositoryPort.findById(aSpaceshipId);
-        repositoryPort.findById(aSpaceshipId);
+        spaceshipRepo.findById(aSpaceshipId);
+        spaceshipRepo.findById(aSpaceshipId);
+        spaceshipRepo.findById(aSpaceshipId);
 
         verify(postgreRepository, times(1)).findById(aSpaceshipId);
     }
@@ -76,7 +86,7 @@ class SpaceshipRepositoryAdapterCacheTest {
     @Test
     void given_ANonExistingSpaceship_when_PortIsInvoked_then_CacheDoesntContainItem() {
         var aNonExistingSpaceshipId = UUID.randomUUID();
-        repositoryPort.findById(aNonExistingSpaceshipId);
+        spaceshipRepo.findById(aNonExistingSpaceshipId);
 
         var expectedSpaceship = getCachedSpaceship(aNonExistingSpaceshipId);
         assertThat(expectedSpaceship).isEmpty();

@@ -1,22 +1,22 @@
 package com.excelia.spaceships.infrastructure.in.rest.mappers;
 
-import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.queries.SearchSpaceshipQuery;
 import com.excelia.spaceships.infrastructure.in.rest.controllers.get.SearchSpaceshipRequest;
 import com.excelia.spaceships.infrastructure.in.rest.controllers.get.SearchSpaceshipResponse;
+import com.excelia.spaceships.infrastructure.out.persistence.views.SpaceshipSearchPostgreView;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SearchSpaceshipRestMapper {
 
-    public SearchSpaceshipResponse toResponse(Spaceship source) {
+    public SearchSpaceshipResponse toResponse(SpaceshipSearchPostgreView source) {
         return new SearchSpaceshipResponse(
             source.getId(),
             source.getName(),
             source.getCaptainName(),
             source.getLength(),
             source.getMaxSpeed(),
-            source.getMedia().getName()
+            source.getAppearsIn()
         );
     }
 

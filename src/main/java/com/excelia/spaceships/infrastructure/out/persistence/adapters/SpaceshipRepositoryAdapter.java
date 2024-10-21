@@ -6,7 +6,6 @@ import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.events.SpaceshipCreatedEvent;
 import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
 import com.excelia.spaceships.domain.queries.SearchSpaceshipQuery;
-import com.excelia.spaceships.infrastructure.out.messaging.EventPublisher;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipPostgreMapper;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipViewPostgreMapper;
 import com.excelia.spaceships.infrastructure.out.persistence.model.SpaceshipPostgreModel;
@@ -64,7 +63,7 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
     }
 
     @Override
-    public Page<Spaceship> find(SearchSpaceshipQuery query, Pageable pageable) {
+    public Page<SpaceshipSearchPostgreView> find(SearchSpaceshipQuery query, Pageable pageable) {
 
         ExampleMatcher exampleMatcher = ExampleMatcher.matching()
             .withIgnoreNullValues()
@@ -75,7 +74,7 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
         Example<SpaceshipSearchPostgreView> example = Example.of(spaceshipViewMapper.queryToModel(query),
             exampleMatcher);
 
-        return spaceshipViewRepo.findAll(example, pageable).map(spaceshipViewMapper::toDomainEntity);
+        return spaceshipViewRepo.findAll(example, pageable);
     }
 
 }

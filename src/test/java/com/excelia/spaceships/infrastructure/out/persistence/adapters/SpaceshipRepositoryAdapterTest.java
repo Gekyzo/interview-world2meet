@@ -19,6 +19,7 @@ import com.excelia.spaceships.infrastructure.out.persistence.model.SpaceshipPost
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.MediaPostgreRepository;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipPostgreRepository;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipViewPostgreRepository;
+import com.excelia.spaceships.infrastructure.out.persistence.views.SpaceshipSearchPostgreView;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -77,6 +78,7 @@ class SpaceshipRepositoryAdapterTest {
 
         var medias = populateMediasTable();
         var spaceships = populateSpaceshipsTable(medias);
+        populateSpaceshipsView();
 
         anExistingSpaceshipId = spaceships.stream().findFirst().map(SpaceshipPostgreModel::getId).orElse(null);
         existingSpaceships = spaceships;
@@ -170,15 +172,18 @@ class SpaceshipRepositoryAdapterTest {
 
         @Test
         void given_FindByExistingNameCriteria_when_FindIsInvoked_then_RepositoryReturnsRecords() {
-            var expectedSpaceships = spaceshipsWithWingOnTheirName().toArray(new Spaceship[]{});
+            var expectedSpaceships = spaceshipsWithWingOnTheirName();
             var query = SearchSpaceshipQuery.builder().name("wing").build();
             var pageable = Pageable.unpaged();
 
             var result = sut.find(query, pageable);
 
-            assertThat(result)
-                .hasSize(expectedSpaceships.length)
-                .containsExactlyInAnyOrder(expectedSpaceships);
+            assertThat(result).zipSatisfy(expectedSpaceships, (SpaceshipSearchPostgreView view, Spaceship model) -> {
+                assertThat(view)
+                    .usingRecursiveComparison()
+                    .ignoringFields("media", "appearsIn")
+                    .isEqualTo(model);
+            });
         }
 
     }
@@ -208,6 +213,10 @@ class SpaceshipRepositoryAdapterTest {
             .toList();
 
         return spaceshipRepo.saveAll(spaceships);
+    }
+
+    private void populateSpaceshipsView() {
+        spaceshipRepo.findAll(); // Invoke spaceships table to populate search view
     }
 
     private List<Spaceship> spaceshipsWithWingOnTheirName() {
