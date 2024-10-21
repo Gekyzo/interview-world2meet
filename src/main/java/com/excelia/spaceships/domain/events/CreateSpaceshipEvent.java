@@ -1,15 +1,11 @@
 package com.excelia.spaceships.domain.events;
 
 import com.excelia.spaceships.domain.commands.CreateSpaceshipCommand;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @Builder
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class CreateSpaceshipEvent extends EventCommand {
 
@@ -33,14 +29,10 @@ public class CreateSpaceshipEvent extends EventCommand {
     }
 
     @Override
-    public Map<String, Object> getPayload() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
-        map.put("name", name);
-        map.put("captainName", captainName);
-        map.put("length", length);
-        map.put("maxSpeed", maxSpeed);
-        map.put("appearsIn", appearsIn);
-        return map;
+    public String toString() {
+        return super.toString() + "[id=%s, name=%s, captainName=%s, length=%s, maxSpeed=%s, appearsIn=%s])".formatted(id,
+            name, captainName,
+            length, maxSpeed, appearsIn);
     }
+
 }

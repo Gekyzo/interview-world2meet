@@ -12,7 +12,7 @@ public record EventMetadata(
 
     @Override
     public String toString() {
-        return "[id=%s, date=%s]".formatted(id, date);
+        return "Metadata[id=%s, date=%s]".formatted(id, date);
     }
 
 }

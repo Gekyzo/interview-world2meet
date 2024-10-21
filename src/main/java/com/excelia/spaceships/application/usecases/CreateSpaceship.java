@@ -3,7 +3,7 @@ package com.excelia.spaceships.application.usecases;
 import com.excelia.spaceships.application.mappers.CreateSpaceshipMapper;
 import com.excelia.spaceships.domain.commands.CreateSpaceshipCommand;
 import com.excelia.spaceships.domain.entities.Spaceship;
-import com.excelia.spaceships.domain.events.CreateSpaceshipEvent;
+import com.excelia.spaceships.domain.events.SpaceshipCreatedFact;
 import com.excelia.spaceships.domain.ports.in.CreateSpaceshipPort;
 import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
 import com.excelia.spaceships.infrastructure.out.messaging.EventPublisher;
@@ -20,8 +20,8 @@ public class CreateSpaceship implements CreateSpaceshipPort {
 
     @Override
     public void create(CreateSpaceshipCommand command) {
-        publisher.publish(CreateSpaceshipEvent.from(command));
         Spaceship entity = mapper.toEntity(command);
         repository.create(entity);
+        publisher.publish(SpaceshipCreatedFact.withSpaceshipId(command.id()));
     }
 }
