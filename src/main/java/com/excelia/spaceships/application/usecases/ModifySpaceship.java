@@ -23,10 +23,10 @@ public class ModifySpaceship implements ModifySpaceshipPort {
 
     @Override
     public Optional<Spaceship> modify(ModifySpaceshipCommand command) {
-        Media mediaEntity = mediaMapper.toEntity(command);
-        mediaRepository.update(mediaEntity);
+        Media media = mediaMapper.toEntity(command);
+        mediaRepository.upsert(media);
 
-        Spaceship entity = spaceshipMapper.toEntity(command);
-        return spaceshipRepo.update(entity);
+        Spaceship spaceship = spaceshipMapper.toEntity(command).setMedia(media);
+        return spaceshipRepo.update(spaceship);
     }
 }

@@ -1,6 +1,5 @@
 package com.excelia.spaceships.infrastructure.out.persistence.repositories;
 
-import com.excelia.spaceships.domain.entities.Media;
 import com.excelia.spaceships.infrastructure.out.persistence.model.MediaPostgreModel;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MediaPostgreRepository extends JpaRepository<MediaPostgreModel, UUID> {
 
-    Optional<Media> findByName(String name);
+    Optional<MediaPostgreModel> findByNameIgnoreCase(String name);
 
 }

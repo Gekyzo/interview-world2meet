@@ -30,11 +30,21 @@ public class MediaRepositoryAdapter implements MediaRepositoryPort {
     }
 
     @Override
-    public Optional<Media> update(Media entity) {
-        MediaPostgreModel model = mediaMapper.toPostgreModel(entity);
-        return mediaRepo
-            .findByName(entity.getName())
-            .map(_ -> mediaMapper.toDomainEntity(mediaRepo.save(model)));
+    public Optional<Media> upsert(Media entity) {
+
+        return mediaRepo.findByNameIgnoreCase(entity.getName())
+            .map(existingMedia -> {
+                existingMedia.setName(entity.getName());
+                return mediaRepo.save(existingMedia);
+            })
+            .or(() -> {
+                MediaPostgreModel newMedia = MediaPostgreModel.builder()
+                    .id(UUID.randomUUID())
+                    .name(entity.getName())
+                    .build();
+                return Optional.of(mediaRepo.save(newMedia));
+            })
+            .map(mediaMapper::toDomainEntity);
     }
 
 }

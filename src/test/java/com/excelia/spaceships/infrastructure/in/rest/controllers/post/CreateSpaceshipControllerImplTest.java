@@ -1,8 +1,6 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.post;
 
-import static org.hamcrest.Matchers.matchesPattern;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.excelia.spaceships.domain.ports.in.CreateSpaceshipPort;
@@ -29,17 +27,7 @@ class CreateSpaceshipControllerImplTest extends ControllerTest {
         mockMvc.perform(post(CREATE_SPACESHIP_URI)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(aValidCreateSpaceshipRequest()))
-            .andExpect(status().isCreated());
-    }
-
-    @Test
-    void given_ValidCreateSpaceshipRequest_when_EndpointIsInvoked_then_ResponseMatchesExpected() throws Exception {
-
-        mockMvc
-            .perform(post(CREATE_SPACESHIP_URI)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(aValidCreateSpaceshipRequest()))
-            .andExpect(header().string("Location", matchesPattern(".*/spaceships/[0-9a-fA-F-]{36}")));
+            .andExpect(status().isAccepted());
     }
 
     @Test

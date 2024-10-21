@@ -10,5 +10,5 @@ public interface MediaRepositoryPort {
 
     void create(Media entity);
 
-    Optional<Media> update(Media entity);
+    Optional<Media> upsert(Media entity);
 }

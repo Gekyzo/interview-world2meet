@@ -11,6 +11,8 @@ public final class ApiResponseConfig {
     public static final String RESPONSE_200_MESSAGE = "Successful request";
     public static final String RESPONSE_201_CODE = "201";
     public static final String RESPONSE_201_MESSAGE = "Fulfilled request and resource created";
+    public static final String RESPONSE_202_CODE = "202";
+    public static final String RESPONSE_202_MESSAGE = "Accepted request";
     public static final String RESPONSE_204_CODE = "204";
     public static final String RESPONSE_204_MESSAGE = "Fulfilled request with no additional content";
 

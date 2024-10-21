@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS spaceships
     captain_name VARCHAR(255),
     length       DOUBLE PRECISION,
     max_speed    INTEGER,
-    appears_in   VARCHAR(255),
-    CONSTRAINT uq_spaceship_name UNIQUE (name)
+    media_id     UUID,
+    CONSTRAINT uq_spaceship_name UNIQUE (name),
+    CONSTRAINT fk_media FOREIGN KEY (media_id) REFERENCES medias (id)
 );
