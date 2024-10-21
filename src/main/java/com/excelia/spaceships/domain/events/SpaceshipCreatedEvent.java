@@ -6,12 +6,12 @@ import lombok.EqualsAndHashCode;
 
 @Builder
 @EqualsAndHashCode(callSuper = true)
-public class SpaceshipCreatedFact extends EventFact {
+public class SpaceshipCreatedEvent extends EventFact {
 
     private final UUID spaceshipId;
 
-    public static SpaceshipCreatedFact withSpaceshipId(UUID id) {
-        return SpaceshipCreatedFact.builder()
+    public static SpaceshipCreatedEvent withSpaceshipId(UUID id) {
+        return SpaceshipCreatedEvent.builder()
             .spaceshipId(id)
             .build();
     }
