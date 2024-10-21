@@ -15,7 +15,6 @@ public class CreateSpaceshipMapper {
             .captainName(source.getCaptainName())
             .length(source.getLength())
             .maxSpeed(source.getMaxSpeed())
-            .appearsIn(source.getAppearsIn())
             .build();
     }
 }

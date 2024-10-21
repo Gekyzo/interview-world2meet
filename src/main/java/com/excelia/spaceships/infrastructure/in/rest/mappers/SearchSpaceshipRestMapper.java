@@ -16,7 +16,7 @@ public class SearchSpaceshipRestMapper {
             source.getCaptainName(),
             source.getLength(),
             source.getMaxSpeed(),
-            source.getAppearsIn()
+            source.getMedia().getName()
         );
     }
 

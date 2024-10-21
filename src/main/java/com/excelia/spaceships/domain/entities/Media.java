@@ -6,25 +6,17 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.Accessors;
 
 @Getter
-@Setter
 @Builder
 @ToString
-@Accessors(chain = true)
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class Spaceship {
+public class Media {
 
     private UUID id;
     private String name;
-    private String captainName;
-    private Double length;
-    private Integer maxSpeed;
-    private Media media;
 
 }

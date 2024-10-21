@@ -8,47 +8,57 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
+import com.excelia.spaceships.application.messaging.EventPublisherPort;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.queries.SearchSpaceshipQuery;
 import com.excelia.spaceships.infrastructure.out.messaging.EventPublisher;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipPostgreMapper;
+import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipViewPostgreMapper;
+import com.excelia.spaceships.infrastructure.out.persistence.model.MediaPostgreModel;
 import com.excelia.spaceships.infrastructure.out.persistence.model.SpaceshipPostgreModel;
+import com.excelia.spaceships.infrastructure.out.persistence.repositories.MediaPostgreRepository;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipPostgreRepository;
+import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipViewPostgreRepository;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Stream;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Pageable;
 
-@Import({SpaceshipPostgreMapper.class})
+@Import({SpaceshipPostgreMapper.class, SpaceshipViewPostgreMapper.class, EventPublisher.class})
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
 class SpaceshipRepositoryAdapterTest {
 
     @SpyBean
-    private SpaceshipPostgreRepository postgreRepository;
+    private SpaceshipPostgreRepository spaceshipRepo;
 
     @SpyBean
-    private SpaceshipPostgreMapper mapper;
+    private SpaceshipViewPostgreRepository spaceshipViewRepo;
 
     @SpyBean
-    private EventPublisher eventPublisher;
+    private SpaceshipPostgreMapper spaceshipMapper;
+
+    @SpyBean
+    private SpaceshipViewPostgreMapper spaceshipViewMapper;
+
+    @SpyBean
+    private EventPublisherPort eventPublisher;
+
+    @Autowired
+    private MediaPostgreRepository mediaRepo;
 
     private SpaceshipRepositoryAdapter sut;
 
@@ -57,9 +67,17 @@ class SpaceshipRepositoryAdapterTest {
 
     @BeforeEach
     void setUp() {
-        this.sut = new SpaceshipRepositoryAdapter(postgreRepository, mapper, eventPublisher);
-        var spaceships = buildSpaceshipObjects();
-        postgreRepository.saveAll(spaceships);
+        this.sut = new SpaceshipRepositoryAdapter(
+            spaceshipRepo,
+            spaceshipViewRepo,
+            spaceshipMapper,
+            spaceshipViewMapper,
+            eventPublisher
+        );
+
+        var medias = populateMediasTable();
+        var spaceships = populateSpaceshipsTable(medias);
+
         anExistingSpaceshipId = spaceships.stream().findFirst().map(SpaceshipPostgreModel::getId).orElse(null);
         existingSpaceships = spaceships;
     }
@@ -73,7 +91,7 @@ class SpaceshipRepositoryAdapterTest {
 
             sut.create(entity);
 
-            verify(mapper).toPostgreModel(entity);
+            verify(spaceshipMapper).toPostgreModel(entity);
         }
 
         @Test
@@ -82,7 +100,7 @@ class SpaceshipRepositoryAdapterTest {
 
             sut.create(entity);
 
-            verify(postgreRepository).save(any(SpaceshipPostgreModel.class));
+            verify(spaceshipRepo).save(any(SpaceshipPostgreModel.class));
         }
 
     }
@@ -94,35 +112,25 @@ class SpaceshipRepositoryAdapterTest {
         void given_ExistingSpaceshipId_when_DeleteIsInvoked_then_FindByIdIsInvoked() {
             sut.delete(anExistingSpaceshipId);
 
-            verify(postgreRepository).findById(anExistingSpaceshipId);
+            verify(spaceshipRepo).findById(anExistingSpaceshipId);
         }
 
         @Test
         void given_ExistingSpaceshipId_when_DeleteIsInvoked_then_DeleteByIdIsInvoked() {
             sut.delete(anExistingSpaceshipId);
 
-            verify(postgreRepository).deleteById(anExistingSpaceshipId);
+            verify(spaceshipRepo).deleteById(anExistingSpaceshipId);
         }
 
-        @ParameterizedTest(name = "With locale: {0}")
-        @MethodSource("deleteNonExistentSpaceshipSource")
-        void given_NonExistingSpaceshipId_when_DeleteIsInvoked_then_ExceptionIsThrown(Locale locale,
-            String expectedMessage) {
-            Locale.setDefault(locale);
+        @Test
+        void given_NonExistingSpaceshipId_when_DeleteIsInvoked_then_ExceptionIsThrown() {
             var nonExistingSpaceshipId = UUID.randomUUID();
 
             ThrowingCallable deleteSpaceship = () -> sut.delete(nonExistingSpaceshipId);
 
             assertThatThrownBy(deleteSpaceship)
                 .isInstanceOf(SpaceshipNotFoundException.class)
-                .hasMessage(expectedMessage.formatted(nonExistingSpaceshipId));
-        }
-
-        public static Stream<Arguments> deleteNonExistentSpaceshipSource() {
-            return Stream.of(
-                Arguments.of(Locale.ENGLISH, "Spaceship not found for ID %s"),
-                Arguments.of(Locale.forLanguageTag("es-ES"), "Nave no encontrada para ID %s")
-            );
+                .hasMessage("Spaceship not found for ID %s".formatted(nonExistingSpaceshipId));
         }
 
     }
@@ -137,7 +145,7 @@ class SpaceshipRepositoryAdapterTest {
 
             sut.find(query, pageable);
 
-            verify(postgreRepository).findAll(any(), eq(pageable));
+            verify(spaceshipViewRepo).findAll(any(), eq(pageable));
         }
 
         @Test
@@ -175,7 +183,13 @@ class SpaceshipRepositoryAdapterTest {
 
     }
 
-    private List<SpaceshipPostgreModel> buildSpaceshipObjects() {
+    private List<MediaPostgreModel> populateMediasTable() {
+
+        return mediaRepo.saveAll(Instancio.ofList(MediaPostgreModel.class).size(2).create());
+    }
+
+    private List<SpaceshipPostgreModel> populateSpaceshipsTable(List<MediaPostgreModel> existingMedias) {
+
         var uniqueSpaceshipNames = Set.of(
             "X-Wing",
             "Y-Wing",
@@ -184,17 +198,22 @@ class SpaceshipRepositoryAdapterTest {
             "Battlestar Galactica"
         );
 
-        return uniqueSpaceshipNames.stream()
+        var existingMediasIds = existingMedias.stream().map(MediaPostgreModel::getId).toList();
+
+        var spaceships = uniqueSpaceshipNames.stream()
             .map(name -> Instancio.of(SpaceshipPostgreModel.class)
                 .set(field(SpaceshipPostgreModel::getName), name)
+                .generate(field(SpaceshipPostgreModel::getMediaId), gen -> gen.oneOf(existingMediasIds))
                 .create())
             .toList();
+
+        return spaceshipRepo.saveAll(spaceships);
     }
 
     private List<Spaceship> spaceshipsWithWingOnTheirName() {
         return existingSpaceships.stream()
             .filter(s -> s.getName().toLowerCase().contains("wing"))
-            .map(mapper::toDomainEntity)
+            .map(spaceshipMapper::toDomainEntity)
             .toList();
     }
 

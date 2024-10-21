@@ -28,7 +28,7 @@ public class ModifySpaceshipRestMapper {
             source.getCaptainName(),
             source.getLength(),
             source.getMaxSpeed(),
-            source.getAppearsIn()
+            source.getMedia().getName()
         );
     }
 }

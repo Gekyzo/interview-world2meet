@@ -6,5 +6,5 @@ CREATE TABLE IF NOT EXISTS spaceships
     length       DOUBLE PRECISION,
     max_speed    INTEGER,
     appears_in   VARCHAR(255),
-    CONSTRAINT uq_name UNIQUE (name)
+    CONSTRAINT uq_spaceship_name UNIQUE (name)
 );

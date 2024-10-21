@@ -20,7 +20,7 @@ spring:
     docker:
         compose:
             file: compose-database.yaml
-            lifecycle-management: start_and_stop
+            lifecycle-management: start_only
 
     mvc:
         problemdetails:

@@ -4,19 +4,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.util.UUID;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Table
 @Getter
 @Builder
+@Entity(name = "medias")
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "spaceships")
-public class SpaceshipPostgreModel {
+public class MediaPostgreModel {
 
     @Id
     @Column(name = "id")
@@ -24,17 +22,5 @@ public class SpaceshipPostgreModel {
 
     @Column(name = "name", unique = true)
     private String name;
-
-    @Column(name = "captain_name")
-    private String captainName;
-
-    @Column(name = "length")
-    private Double length;
-
-    @Column(name = "max_speed")
-    private Integer maxSpeed;
-
-    @Column(name = "media_id")
-    private UUID mediaId;
 
 }

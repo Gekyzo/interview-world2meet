@@ -15,7 +15,6 @@ public class ModifySpaceshipMapper {
             .captainName(source.captainName())
             .length(source.length())
             .maxSpeed(source.maxSpeed())
-            .appearsIn(source.appearsIn())
             .build();
     }
 }
