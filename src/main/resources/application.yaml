@@ -2,6 +2,8 @@ spring:
 
     application:
         name: spaceships
+        version: 1.0.0
+        description: Spaceship management service
 
     datasource:
         url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:private}
@@ -18,7 +20,7 @@ spring:
     docker:
         compose:
             file: compose-database.yaml
-            lifecycle-management: start_only
+            lifecycle-management: start_and_stop
 
     mvc:
         problemdetails:
