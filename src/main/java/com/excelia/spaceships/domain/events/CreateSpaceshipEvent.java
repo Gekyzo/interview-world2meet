@@ -4,7 +4,9 @@ import com.excelia.spaceships.domain.commands.CreateSpaceshipCommand;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
+@Getter
 @Builder
 @EqualsAndHashCode(callSuper = true)
 public class CreateSpaceshipEvent extends EventCommand {

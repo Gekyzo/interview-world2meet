@@ -2,8 +2,10 @@ package com.excelia.spaceships.infrastructure.out.persistence.adapters;
 
 import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
 import com.excelia.spaceships.domain.entities.Spaceship;
+import com.excelia.spaceships.domain.events.SpaceshipCreatedEvent;
 import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
 import com.excelia.spaceships.domain.queries.SearchSpaceshipQuery;
+import com.excelia.spaceships.infrastructure.out.messaging.EventPublisher;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipPostgreMapper;
 import com.excelia.spaceships.infrastructure.out.persistence.model.SpaceshipPostgreModel;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipPostgreRepository;
@@ -24,11 +26,13 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
 
     private final SpaceshipPostgreRepository postgreRepository;
     private final SpaceshipPostgreMapper mapper;
+    private final EventPublisher eventPublisher;
 
     @Override
     public void create(Spaceship entity) {
         SpaceshipPostgreModel model = mapper.toPostgreModel(entity);
         postgreRepository.save(model);
+        eventPublisher.publish(SpaceshipCreatedEvent.withSpaceshipId(model.getId()));
     }
 
     @Override
