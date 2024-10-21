@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
 import com.excelia.spaceships.domain.ports.in.ModifySpaceshipPort;
 import com.excelia.spaceships.infrastructure.in.rest.controllers.ControllerTest;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.ModifySpaceshipRestMapper;
@@ -79,7 +80,7 @@ class ModifySpaceshipControllerImplTest extends ControllerTest {
     @Test
     void given_ModifyNonExistentSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsNotFound() throws Exception {
 
-        given(modifySpaceship.modify(any())).willReturn(null);
+        given(modifySpaceship.modify(any())).willThrow(new SpaceshipNotFoundException(UUID.randomUUID()));
 
         var request = aValidModifySpaceshipRequest();
 
