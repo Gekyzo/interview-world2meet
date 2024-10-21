@@ -5,17 +5,17 @@ services:
 
     backend:
         container_name: spring
-        build:
-            context: ./ # Use root context so Dockerfile can copy /src folder and /pom.xml file
-            dockerfile: ./infra/spring/Dockerfile
+        ports:
+            - '${SERVER_PORT:-8080}:8080'
         environment:
             DB_HOST: postgres
             DB_PORT: 5432
             DB_NAME: private
             DB_USER: postgres
             DB_PASS: secret
-        ports:
-            - '${SERVER_PORT:-8080}:8080'
+        build:
+            context: ./ # Use root context so Dockerfile can copy /src folder and /pom.xml file
+            dockerfile: ./infra/spring/Dockerfile
         depends_on:
             postgresql: # Service declared on compose-database.yaml file
                 condition: service_healthy
