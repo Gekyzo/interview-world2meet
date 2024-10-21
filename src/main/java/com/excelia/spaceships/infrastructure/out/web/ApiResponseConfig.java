@@ -21,5 +21,7 @@ public final class ApiResponseConfig {
     public static final String RESPONSE_400_MESSAGE = "Server cannot process the request. Check for malformed syntax, invalid parameters, or missing required fields";
     public static final String RESPONSE_404_CODE = "404";
     public static final String RESPONSE_404_MESSAGE = "Requested resource could not be found";
+    public static final String RESPONSE_409_CODE = "409";
+    public static final String RESPONSE_409_MESSAGE = "Requested resource already exists";
 
 }

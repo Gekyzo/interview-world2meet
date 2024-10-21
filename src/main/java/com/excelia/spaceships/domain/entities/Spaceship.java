@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 @Getter
 @Setter
-@Builder
+@Builder(builderClassName = "SpaceshipBuilder")
 @ToString
 @Accessors(chain = true)
 @EqualsAndHashCode
@@ -27,5 +27,14 @@ public class Spaceship {
     private Integer maxSpeed;
     private Media media;
 
-    // TOOD: Incluir una validación de negocio entre dos campos en el builder
+    public static class SpaceshipBuilder {
+
+        public Spaceship build() {
+            if ("Millennium Falcon".equals(name) && !"Han Solo".equals(captainName)) {
+                throw new IllegalArgumentException("Only Han Solo can captain this ship!");
+            }
+            return new Spaceship(id, name, captainName, length, maxSpeed, media);
+        }
+    }
+
 }

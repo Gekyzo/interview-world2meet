@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MediaPostgreRepository extends JpaRepository<MediaPostgreModel, UUID> {
 
-    Optional<MediaPostgreModel> findByNameIgnoreCase(String name);
+    Optional<MediaPostgreModel> findByNameIgnoreCase(String mediaName);
 
 }

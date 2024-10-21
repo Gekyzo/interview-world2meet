@@ -41,6 +41,14 @@ public interface CreateSpaceshipController {
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = CustomProblemDetail.class)
                 )
+            ),
+            @ApiResponse(
+                responseCode = ApiResponseConfig.RESPONSE_409_CODE,
+                description = ApiResponseConfig.RESPONSE_409_MESSAGE,
+                content = @Content(
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = CustomProblemDetail.class)
+                )
             )
         }
     )

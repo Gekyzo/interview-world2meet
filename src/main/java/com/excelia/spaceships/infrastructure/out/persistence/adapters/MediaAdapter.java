@@ -25,8 +25,13 @@ public class MediaAdapter implements MediaPort {
 
     @Override
     public Media create(Media entity) {
-        MediaPostgreModel model = mediaMapper.toPostgreModel(entity);
-        return mediaMapper.toDomainEntity(mediaRepo.save(model));
+
+        return mediaRepo.findByNameIgnoreCase(entity.getName())
+            .map(mediaMapper::toDomainEntity)
+            .orElseGet(() -> {
+                MediaPostgreModel model = mediaMapper.toPostgreModel(entity);
+                return mediaMapper.toDomainEntity(mediaRepo.save(model));
+            });
     }
 
     @Override

@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface SpaceshipPort {
 
-    void create(Spaceship entity);
+    Spaceship create(Spaceship entity);
 
     void delete(UUID spaceshipId);
 

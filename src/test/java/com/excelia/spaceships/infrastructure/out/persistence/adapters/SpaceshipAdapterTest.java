@@ -8,7 +8,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
-import com.excelia.spaceships.application.messaging.EventPublisherPort;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.queries.SearchSpaceshipQuery;
 import com.excelia.spaceships.infrastructure.out.messaging.EventPublisher;
@@ -55,9 +54,6 @@ class SpaceshipAdapterTest {
     @SpyBean
     private SpaceshipViewPostgreMapper spaceshipViewMapper;
 
-    @SpyBean
-    private EventPublisherPort eventPublisher;
-
     @Autowired
     private MediaPostgreRepository mediaRepo;
 
@@ -72,8 +68,7 @@ class SpaceshipAdapterTest {
             spaceshipRepo,
             spaceshipViewRepo,
             spaceshipMapper,
-            spaceshipViewMapper,
-            eventPublisher
+            spaceshipViewMapper
         );
 
         var medias = populateMediasTable();

@@ -2,6 +2,7 @@ package com.excelia.spaceships.infrastructure.out.web;
 
 import static com.excelia.spaceships.utils.messaging.MessageUtils.getMessageSource;
 
+import com.excelia.spaceships.application.exceptions.SpaceshipDuplicatedException;
 import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -27,9 +28,16 @@ public class GlobalExceptionHandler {
         return ProblemDetail.forStatusAndDetail(getResponseStatus(ex.getClass()), ex.getMessage());
     }
 
+    @ExceptionHandler(SpaceshipDuplicatedException.class)
+    public ProblemDetail spaceshipDuplicatedExceptionHandler(HttpServletRequest request, Exception ex) {
+        logProblem(request, ex);
+        return ProblemDetail.forStatusAndDetail(getResponseStatus(ex.getClass()), ex.getMessage());
+    }
+
     @ExceptionHandler({
         HttpMessageNotReadableException.class, // Wrong parameter type in request body
         MethodArgumentTypeMismatchException.class, // Wrong type in path variable
+        IllegalArgumentException.class, // Wrong type in path variable
     })
     public ProblemDetail notReadableRequestContent(HttpServletRequest request, Exception ex) {
         logProblem(request, ex);

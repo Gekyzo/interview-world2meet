@@ -1,9 +1,8 @@
 package com.excelia.spaceships.infrastructure.out.persistence.adapters;
 
+import com.excelia.spaceships.application.exceptions.SpaceshipDuplicatedException;
 import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
-import com.excelia.spaceships.application.messaging.EventPublisherPort;
 import com.excelia.spaceships.domain.entities.Spaceship;
-import com.excelia.spaceships.domain.events.SpaceshipCreatedEvent;
 import com.excelia.spaceships.domain.ports.out.SpaceshipPort;
 import com.excelia.spaceships.domain.queries.SearchSpaceshipQuery;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipPostgreMapper;
@@ -31,13 +30,16 @@ public class SpaceshipAdapter implements SpaceshipPort {
     private final SpaceshipViewPostgreRepository spaceshipViewRepo;
     private final SpaceshipPostgreMapper spaceshipMapper;
     private final SpaceshipViewPostgreMapper spaceshipViewMapper;
-    private final EventPublisherPort eventPublisher;
 
     @Override
-    public void create(Spaceship entity) {
+    public Spaceship create(Spaceship entity) {
+
+        spaceshipRepo.findByNameIgnoreCase(entity.getName()).ifPresent(value -> {
+            throw new SpaceshipDuplicatedException(value.getName());
+        });
+
         SpaceshipPostgreModel model = spaceshipMapper.toPostgreModel(entity);
-        spaceshipRepo.save(model);
-        eventPublisher.publish(SpaceshipCreatedEvent.withSpaceshipId(model.getId()));
+        return spaceshipMapper.toDomainEntity(spaceshipRepo.save(model));
     }
 
     @Override
