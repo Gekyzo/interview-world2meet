@@ -1,6 +1,6 @@
 package com.excelia.spaceships.application.exceptions;
 
-import static com.excelia.spaceships.shared.MessageUtils.getMessageSource;
+import static com.excelia.spaceships.utils.messaging.MessageUtils.getMessageSource;
 
 import java.util.UUID;
 

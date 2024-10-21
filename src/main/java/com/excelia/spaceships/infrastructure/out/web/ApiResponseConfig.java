@@ -1,4 +1,4 @@
-package com.excelia.spaceships.config;
+package com.excelia.spaceships.infrastructure.out.web;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

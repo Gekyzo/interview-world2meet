@@ -1,4 +1,4 @@
-package com.excelia.spaceships.shared;
+package com.excelia.spaceships.infrastructure.in.rest.filters;
 
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 

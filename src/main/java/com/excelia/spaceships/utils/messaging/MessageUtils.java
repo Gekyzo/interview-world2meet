@@ -1,4 +1,4 @@
-package com.excelia.spaceships.shared;
+package com.excelia.spaceships.utils.messaging;
 
 import java.util.Locale;
 import lombok.AccessLevel;

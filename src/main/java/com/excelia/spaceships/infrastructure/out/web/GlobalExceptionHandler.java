@@ -1,6 +1,6 @@
-package com.excelia.spaceships.shared;
+package com.excelia.spaceships.infrastructure.out.web;
 
-import static com.excelia.spaceships.shared.MessageUtils.getMessageSource;
+import static com.excelia.spaceships.utils.messaging.MessageUtils.getMessageSource;
 
 import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;

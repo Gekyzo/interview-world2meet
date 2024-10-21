@@ -1,6 +1,6 @@
-package com.excelia.spaceships.shared;
+package com.excelia.spaceships.application.aspects;
 
-import static com.excelia.spaceships.shared.MessageUtils.getMessageSource;
+import static com.excelia.spaceships.utils.messaging.MessageUtils.getMessageSource;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
@@ -20,7 +20,7 @@ public class LogNegativeSpaceshipIdAspect {
     private static final String MESSAGE_KEY = "errors.spaceship.negativeid";
     private static final Pattern NEGATIVE_SPACESHIP_ID_PATTERN = Pattern.compile("/spaceships/(-\\d+)");
 
-    @Before("execution(* com.excelia.spaceships.shared.FirstFilter.doFilter(..))")
+    @Before("execution(* com.excelia.spaceships.infrastructure.in.rest.filters.FirstFilter.doFilter(..))")
     public void aroundDoFilter(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         HttpServletRequest request = (HttpServletRequest) args[0];

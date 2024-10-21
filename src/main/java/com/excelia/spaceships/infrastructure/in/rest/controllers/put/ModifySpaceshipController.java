@@ -1,7 +1,7 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.put;
 
-import com.excelia.spaceships.config.ApiResponseConfig;
-import com.excelia.spaceships.shared.CustomProblemDetail;
+import com.excelia.spaceships.infrastructure.out.web.ApiResponseConfig;
+import com.excelia.spaceships.infrastructure.out.web.CustomProblemDetail;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

@@ -1,4 +1,4 @@
-package com.excelia.spaceships.shared;
+package com.excelia.spaceships.infrastructure.out.web;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
