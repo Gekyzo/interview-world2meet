@@ -14,9 +14,9 @@ import com.excelia.spaceships.infrastructure.out.messaging.EventPublisher;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipPostgreMapper;
 import com.excelia.spaceships.infrastructure.out.persistence.model.SpaceshipPostgreModel;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipPostgreRepository;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
@@ -176,20 +176,19 @@ class SpaceshipRepositoryAdapterTest {
     }
 
     private List<SpaceshipPostgreModel> buildSpaceshipObjects() {
-        List<SpaceshipPostgreModel> spaceships = new ArrayList<>();
+        var uniqueSpaceshipNames = Set.of(
+            "X-Wing",
+            "Y-Wing",
+            "Millennium Falcon",
+            "USS Enterprise",
+            "Battlestar Galactica"
+        );
 
-        spaceships.addAll(Instancio.ofList(SpaceshipPostgreModel.class)
-            .size(2)
-            .generate(field(SpaceshipPostgreModel::getName), gen -> gen.oneOf("X-Wing", "Y-Wing"))
-            .create());
-
-        spaceships.addAll(Instancio.ofList(SpaceshipPostgreModel.class)
-            .size(2)
-            .generate(field(SpaceshipPostgreModel::getName),
-                gen -> gen.oneOf("Millennium Falcon", "USS Enterprise", "Battlestar Galactica"))
-            .create());
-
-        return spaceships;
+        return uniqueSpaceshipNames.stream()
+            .map(name -> Instancio.of(SpaceshipPostgreModel.class)
+                .set(field(SpaceshipPostgreModel::getName), name)
+                .create())
+            .toList();
     }
 
     private List<Spaceship> spaceshipsWithWingOnTheirName() {
