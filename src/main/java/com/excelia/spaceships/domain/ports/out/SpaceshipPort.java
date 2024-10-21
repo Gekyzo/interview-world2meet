@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface SpaceshipRepositoryPort {
+public interface SpaceshipPort {
 
     void create(Spaceship entity);
 
@@ -19,4 +19,5 @@ public interface SpaceshipRepositoryPort {
     Spaceship update(Spaceship entity);
 
     Page<SpaceshipSearchPostgreView> find(SearchSpaceshipQuery query, Pageable pageable);
+
 }

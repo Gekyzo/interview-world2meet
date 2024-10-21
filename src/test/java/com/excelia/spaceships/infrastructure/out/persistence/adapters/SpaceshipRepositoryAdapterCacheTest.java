@@ -7,8 +7,8 @@ import static org.mockito.Mockito.verify;
 
 import com.excelia.spaceships.domain.entities.Media;
 import com.excelia.spaceships.domain.entities.Spaceship;
-import com.excelia.spaceships.domain.ports.out.MediaRepositoryPort;
-import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
+import com.excelia.spaceships.domain.ports.out.MediaPort;
+import com.excelia.spaceships.domain.ports.out.SpaceshipPort;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipPostgreRepository;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,13 +31,13 @@ class SpaceshipRepositoryAdapterCacheTest {
     private CacheManager cacheManager;
 
     @Autowired
-    private SpaceshipRepositoryPort spaceshipRepo;
+    private SpaceshipPort spaceshipRepo;
 
     @SpyBean
     private SpaceshipPostgreRepository postgreRepository;
 
     @Autowired
-    private MediaRepositoryPort mediaRepo;
+    private MediaPort mediaRepo;
 
     private final UUID aSpaceshipId = UUID.randomUUID();
 

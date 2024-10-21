@@ -4,11 +4,12 @@ import com.excelia.spaceships.domain.entities.Media;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface MediaRepositoryPort {
+public interface MediaPort {
 
     Optional<Media> findById(UUID mediaId);
 
-    void create(Media entity);
+    Media create(Media entity);
 
     Media upsert(Media entity);
+
 }

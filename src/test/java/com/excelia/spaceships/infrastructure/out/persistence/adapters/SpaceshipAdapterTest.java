@@ -41,7 +41,7 @@ import org.springframework.data.domain.Pageable;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-class SpaceshipRepositoryAdapterTest {
+class SpaceshipAdapterTest {
 
     @SpyBean
     private SpaceshipPostgreRepository spaceshipRepo;
@@ -61,14 +61,14 @@ class SpaceshipRepositoryAdapterTest {
     @Autowired
     private MediaPostgreRepository mediaRepo;
 
-    private SpaceshipRepositoryAdapter sut;
+    private SpaceshipAdapter sut;
 
     private UUID anExistingSpaceshipId;
     private List<SpaceshipPostgreModel> existingSpaceships;
 
     @BeforeEach
     void setUp() {
-        this.sut = new SpaceshipRepositoryAdapter(
+        this.sut = new SpaceshipAdapter(
             spaceshipRepo,
             spaceshipViewRepo,
             spaceshipMapper,

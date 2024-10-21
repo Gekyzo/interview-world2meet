@@ -6,8 +6,8 @@ import com.excelia.spaceships.domain.commands.ModifySpaceshipCommand;
 import com.excelia.spaceships.domain.entities.Media;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.ports.in.ModifySpaceshipPort;
-import com.excelia.spaceships.domain.ports.out.MediaRepositoryPort;
-import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
+import com.excelia.spaceships.domain.ports.out.MediaPort;
+import com.excelia.spaceships.domain.ports.out.SpaceshipPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +15,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ModifySpaceship implements ModifySpaceshipPort {
 
-    private final SpaceshipRepositoryPort spaceshipRepo;
-    private final MediaRepositoryPort mediaRepository;
+    private final SpaceshipPort spaceshipPort;
+    private final MediaPort mediaPort;
     private final ModifySpaceshipMapper spaceshipMapper;
     private final ModifyMediaMapper mediaMapper;
 
     @Override
     public Spaceship modify(ModifySpaceshipCommand command) {
-        Media upsertMedia = mediaRepository.upsert(mediaMapper.toEntity(command));
+        Media upsertMedia = mediaPort.upsert(mediaMapper.toEntity(command));
 
         Spaceship spaceship = spaceshipMapper.toEntity(command).setMedia(upsertMedia);
-        return spaceshipRepo.update(spaceship);
+        return spaceshipPort.update(spaceship);
     }
 }

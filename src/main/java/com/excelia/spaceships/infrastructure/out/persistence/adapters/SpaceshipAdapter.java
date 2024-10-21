@@ -4,7 +4,7 @@ import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
 import com.excelia.spaceships.application.messaging.EventPublisherPort;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.events.SpaceshipCreatedEvent;
-import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
+import com.excelia.spaceships.domain.ports.out.SpaceshipPort;
 import com.excelia.spaceships.domain.queries.SearchSpaceshipQuery;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipPostgreMapper;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipViewPostgreMapper;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
+public class SpaceshipAdapter implements SpaceshipPort {
 
     private final SpaceshipPostgreRepository spaceshipRepo;
     private final SpaceshipViewPostgreRepository spaceshipViewRepo;

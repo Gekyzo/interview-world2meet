@@ -27,7 +27,7 @@ class CreateSpaceshipControllerImplTest extends ControllerTest {
         mockMvc.perform(post(CREATE_SPACESHIP_URI)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(aValidCreateSpaceshipRequest()))
-            .andExpect(status().isAccepted());
+            .andExpect(status().isCreated());
     }
 
     @Test

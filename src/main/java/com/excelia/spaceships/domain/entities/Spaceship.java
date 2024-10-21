@@ -27,4 +27,5 @@ public class Spaceship {
     private Integer maxSpeed;
     private Media media;
 
+    // TOOD: Incluir una validación de negocio entre dos campos en el builder
 }

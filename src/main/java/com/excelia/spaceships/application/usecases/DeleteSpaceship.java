@@ -1,7 +1,7 @@
 package com.excelia.spaceships.application.usecases;
 
 import com.excelia.spaceships.domain.ports.in.DeleteSpaceshipPort;
-import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
+import com.excelia.spaceships.domain.ports.out.SpaceshipPort;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DeleteSpaceship implements DeleteSpaceshipPort {
 
-    private final SpaceshipRepositoryPort repository;
+    private final SpaceshipPort repository;
 
     @Override
     public void delete(UUID spaceshipId) {

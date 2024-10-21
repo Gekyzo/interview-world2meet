@@ -1,6 +1,6 @@
 package com.excelia.spaceships.infrastructure.in.rest.controllers.get;
 
-import static com.junit.object_mothers.SpaceshipObjectMother.aSpaceship;
+import static com.junit.factories.SpaceshipFactory.aSpaceship;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

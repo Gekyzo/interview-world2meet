@@ -1,7 +1,7 @@
 package com.excelia.spaceships.infrastructure.out.persistence.adapters;
 
 import com.excelia.spaceships.domain.entities.Media;
-import com.excelia.spaceships.domain.ports.out.MediaRepositoryPort;
+import com.excelia.spaceships.domain.ports.out.MediaPort;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.MediaPostgreMapper;
 import com.excelia.spaceships.infrastructure.out.persistence.model.MediaPostgreModel;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.MediaPostgreRepository;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class MediaRepositoryAdapter implements MediaRepositoryPort {
+public class MediaAdapter implements MediaPort {
 
     private final MediaPostgreRepository mediaRepo;
     private final MediaPostgreMapper mediaMapper;
@@ -24,9 +24,9 @@ public class MediaRepositoryAdapter implements MediaRepositoryPort {
     }
 
     @Override
-    public void create(Media entity) {
+    public Media create(Media entity) {
         MediaPostgreModel model = mediaMapper.toPostgreModel(entity);
-        mediaRepo.save(model);
+        return mediaMapper.toDomainEntity(mediaRepo.save(model));
     }
 
     @Override
