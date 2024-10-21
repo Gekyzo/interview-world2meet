@@ -50,16 +50,17 @@ public class SpaceshipRepositoryAdapter implements SpaceshipRepositoryPort {
     @Override
     @Cacheable(value = "spaceshipById", key = "#spaceshipId")
     public Optional<Spaceship> findById(UUID spaceshipId) {
-        return spaceshipRepo.findById(spaceshipId).map(spaceshipMapper::toDomainEntity);
+        return spaceshipRepo.findById(spaceshipId).map(spaceshipMapper::toDomainEntityWithMediaId);
     }
 
     @Override
     @CacheEvict(value = "spaceshipById", allEntries = true)
-    public Optional<Spaceship> update(Spaceship entity) {
+    public Spaceship update(Spaceship entity) {
         SpaceshipPostgreModel model = spaceshipMapper.toPostgreModel(entity);
         return spaceshipRepo
             .findById(entity.getId())
-            .map(_ -> spaceshipMapper.toDomainEntity(spaceshipRepo.save(model)));
+            .map(_ -> spaceshipMapper.toDomainEntity(spaceshipRepo.save(model)).setMedia(entity.getMedia()))
+            .orElseThrow(() -> new SpaceshipNotFoundException(entity.getId()));
     }
 
     @Override

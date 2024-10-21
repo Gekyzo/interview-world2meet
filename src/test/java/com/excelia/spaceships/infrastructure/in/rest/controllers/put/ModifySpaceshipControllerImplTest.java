@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.excelia.spaceships.domain.ports.in.ModifySpaceshipPort;
 import com.excelia.spaceships.infrastructure.in.rest.controllers.ControllerTest;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.ModifySpaceshipRestMapper;
-import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -31,7 +30,7 @@ class ModifySpaceshipControllerImplTest extends ControllerTest {
     @Test
     void given_ValidModifySpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsOk() throws Exception {
 
-        given(modifySpaceship.modify(any())).willReturn(Optional.of(aSpaceship()));
+        given(modifySpaceship.modify(any())).willReturn(aSpaceship());
 
         var request = aValidModifySpaceshipRequest();
 
@@ -44,7 +43,7 @@ class ModifySpaceshipControllerImplTest extends ControllerTest {
     @Test
     void given_ValidModifySpaceshipRequest_when_EndpointIsInvoked_then_ResponseMatchesExpected() throws Exception {
 
-        given(modifySpaceship.modify(any())).willReturn(Optional.of(aSpaceship()));
+        given(modifySpaceship.modify(any())).willReturn(aSpaceship());
 
         var request = aValidModifySpaceshipRequest();
 
@@ -80,7 +79,7 @@ class ModifySpaceshipControllerImplTest extends ControllerTest {
     @Test
     void given_ModifyNonExistentSpaceshipRequest_when_EndpointIsInvoked_then_ResponseIsNotFound() throws Exception {
 
-        given(modifySpaceship.modify(any())).willReturn(Optional.empty());
+        given(modifySpaceship.modify(any())).willReturn(null);
 
         var request = aValidModifySpaceshipRequest();
 

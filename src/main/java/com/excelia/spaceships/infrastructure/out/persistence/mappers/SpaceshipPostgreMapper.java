@@ -20,6 +20,11 @@ public class SpaceshipPostgreMapper {
             .build();
     }
 
+    public Spaceship toDomainEntityWithMediaId(SpaceshipPostgreModel source) {
+
+        return toDomainEntity(source).setMedia(Media.builder().id(source.getMediaId()).build());
+    }
+
     public Spaceship toDomainEntity(SpaceshipPostgreModel source) {
 
         return Spaceship.builder()
@@ -28,7 +33,6 @@ public class SpaceshipPostgreMapper {
             .captainName(source.getCaptainName())
             .length(source.getLength())
             .maxSpeed(source.getMaxSpeed())
-            .media(Media.builder().id(source.getMediaId()).build())
             .build();
     }
 

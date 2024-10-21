@@ -16,7 +16,7 @@ public interface SpaceshipRepositoryPort {
 
     Optional<Spaceship> findById(UUID spaceshipId);
 
-    Optional<Spaceship> update(Spaceship entity);
+    Spaceship update(Spaceship entity);
 
     Page<SpaceshipSearchPostgreView> find(SearchSpaceshipQuery query, Pageable pageable);
 }
