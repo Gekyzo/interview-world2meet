@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import com.excelia.spaceships.application.exceptions.SpaceshipNotFoundException;
 import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.queries.SearchSpaceshipQuery;
+import com.excelia.spaceships.infrastructure.out.messaging.EventPublisher;
 import com.excelia.spaceships.infrastructure.out.persistence.mappers.SpaceshipPostgreMapper;
 import com.excelia.spaceships.infrastructure.out.persistence.model.SpaceshipPostgreModel;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipPostgreRepository;
@@ -46,6 +47,9 @@ class SpaceshipRepositoryAdapterTest {
     @SpyBean
     private SpaceshipPostgreMapper mapper;
 
+    @SpyBean
+    private EventPublisher eventPublisher;
+
     private SpaceshipRepositoryAdapter sut;
 
     private UUID anExistingSpaceshipId;
@@ -53,7 +57,7 @@ class SpaceshipRepositoryAdapterTest {
 
     @BeforeEach
     void setUp() {
-        this.sut = new SpaceshipRepositoryAdapter(postgreRepository, mapper);
+        this.sut = new SpaceshipRepositoryAdapter(postgreRepository, mapper, eventPublisher);
         var spaceships = buildSpaceshipObjects();
         postgreRepository.saveAll(spaceships);
         anExistingSpaceshipId = spaceships.stream().findFirst().map(SpaceshipPostgreModel::getId).orElse(null);

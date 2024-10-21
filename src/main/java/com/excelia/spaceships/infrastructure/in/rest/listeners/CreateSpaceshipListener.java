@@ -7,6 +7,7 @@ import com.excelia.spaceships.domain.ports.out.SpaceshipRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
+import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +19,7 @@ public class CreateSpaceshipListener {
     private final CreateSpaceshipMapper mapper;
     private final SpaceshipRepositoryPort repository;
 
-    @Async
-    @EventListener
+    @ApplicationModuleListener
     public void on(CreateSpaceshipEvent event) {
         log.info("Event received: {}", event);
         Spaceship entity = mapper.toEntity(event);
