@@ -17,7 +17,6 @@ public class CreateSpaceship implements CreateSpaceshipPort {
 
     private final SpaceshipRepositoryPort repository;
     private final CreateSpaceshipMapper mapper;
-    private final EventPublisher publisher;
     private final EventPublisher eventPublisher;
 
     @Override
@@ -25,6 +24,6 @@ public class CreateSpaceship implements CreateSpaceshipPort {
         eventPublisher.publish(CreateSpaceshipEvent.from(command));
         Spaceship entity = mapper.toEntity(command);
         repository.create(entity);
-        publisher.publish(SpaceshipCreatedEvent.withSpaceshipId(command.id()));
+        eventPublisher.publish(SpaceshipCreatedEvent.withSpaceshipId(command.id()));
     }
 }
