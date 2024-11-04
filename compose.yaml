@@ -19,3 +19,13 @@ services:
         depends_on:
             postgresql: # Service declared on compose-database.yaml file
                 condition: service_healthy
+
+    redis:
+        container_name: redis:7.4.1
+        ports:
+            - '6379:6379'
+        image: redis
+        environment:
+            ALLOW_EMPTY_PASSWORD: yes
+        volumes:
+            - ./infra/redis/redis_data:/data

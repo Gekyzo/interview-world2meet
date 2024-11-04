@@ -10,10 +10,12 @@ import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.ports.out.MediaPort;
 import com.excelia.spaceships.domain.ports.out.SpaceshipPort;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipPostgreRepository;
+import com.redis.testcontainers.RedisContainer;
 import java.util.Optional;
 import java.util.UUID;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,10 +24,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.cache.CacheManager;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.utility.DockerImageName;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class SpaceshipRepositoryAdapterCacheTest {
+
+    private static final RedisContainer redisContainer = new RedisContainer(
+        DockerImageName.parse("redis:7.4.1"))
+        .withExposedPorts(6379);
 
     @Autowired
     private CacheManager cacheManager;
@@ -41,6 +50,17 @@ class SpaceshipRepositoryAdapterCacheTest {
 
     private final UUID aSpaceshipId = UUID.randomUUID();
 
+    @BeforeAll
+    static void beforeAll() {
+        redisContainer.start();
+    }
+
+    @DynamicPropertySource
+    static void redisProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.data.redis.host", redisContainer::getHost);
+        registry.add("spring.data.redis.port", () -> redisContainer.getMappedPort(6379));
+    }
+
     @BeforeEach
     void setUp() {
         var aMedia = Instancio.of(Media.class).create();
@@ -55,8 +75,7 @@ class SpaceshipRepositoryAdapterCacheTest {
 
     @AfterEach
     void afterEach() {
-        cacheManager.getCacheNames().forEach(cacheName ->
-            cacheManager.getCache(cacheName).clear());
+        cacheManager.getCacheNames().forEach(cacheName -> cacheManager.getCache(cacheName).clear());
     }
 
     @Test

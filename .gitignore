@@ -34,3 +34,4 @@ build/
 
 ### Docker ###
 infra/database/postgres_data/
+infra/redis/redis_data/
