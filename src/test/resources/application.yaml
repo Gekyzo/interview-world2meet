@@ -9,3 +9,10 @@ spring:
 
     flyway:
         locations: classpath:db/migrations
+
+#    modulith:
+#        republish-outstanding-events-on-restart: true
+#        events:
+#            jdbc:
+#                schema-initialization:
+#                    enabled: true

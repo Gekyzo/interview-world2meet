@@ -22,6 +22,13 @@ spring:
             file: compose-database.yaml
             lifecycle-management: start_only
 
+#    modulith:
+#        republish-outstanding-events-on-restart: true
+#        events:
+#            jdbc:
+#                schema-initialization:
+#                    enabled: true
+
     mvc:
         problemdetails:
             enabled: true
