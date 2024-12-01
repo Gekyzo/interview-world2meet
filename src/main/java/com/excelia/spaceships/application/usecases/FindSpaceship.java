@@ -6,7 +6,6 @@ import com.excelia.spaceships.domain.ports.in.FindSpaceshipPort;
 import com.excelia.spaceships.domain.ports.out.MediaPort;
 import com.excelia.spaceships.domain.ports.out.SpaceshipPort;
 import com.excelia.spaceships.domain.queries.SearchSpaceshipQuery;
-import com.excelia.spaceships.infrastructure.out.persistence.views.SpaceshipSearchPostgreView;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,11 @@ public class FindSpaceship implements FindSpaceshipPort {
     }
 
     @Override
-    public Page<SpaceshipSearchPostgreView> find(SearchSpaceshipQuery query, Pageable pageable) {
-        return spaceshipPort.find(query, pageable);
+    public Page<Spaceship> find(SearchSpaceshipQuery query, Pageable pageable) {
+        return spaceshipPort.find(query, pageable).map(spaceship -> {
+            Optional<Media> media = mediaPort.findByName(spaceship.getMedia().getName());
+            media.ifPresent(spaceship::setMedia);
+            return spaceship;
+        });
     }
 }

@@ -10,10 +10,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.excelia.spaceships.domain.entities.Spaceship;
 import com.excelia.spaceships.domain.ports.in.FindSpaceshipPort;
 import com.excelia.spaceships.infrastructure.in.rest.controllers.ControllerTest;
 import com.excelia.spaceships.infrastructure.in.rest.mappers.SearchSpaceshipRestMapper;
-import com.excelia.spaceships.infrastructure.out.persistence.views.SpaceshipSearchPostgreView;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -63,7 +63,7 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
     void given_ValidEmptyRequestAndSpaceshipsAreNotEmpty_when_EndpointIsInvoked_then_ResponseMatchesExpected()
         throws Exception {
 
-        var content = Instancio.ofList(SpaceshipSearchPostgreView.class).size(5).create();
+        var content = Instancio.ofList(Spaceship.class).size(5).create();
         given(findSpaceship.find(any(), any())).willReturn(new PageImpl<>(content));
 
         mockMvc.perform(get(FIND_SPACESHIP_URI))
@@ -117,9 +117,9 @@ class SearchSpaceshipsControllerImplTest extends ControllerTest {
     void given_ValidSearchRequestAndSpaceshipsAreNotEmpty_when_EndpointIsInvoked_then_ResponseMatchesExpected()
         throws Exception {
 
-        var content = Instancio.ofList(SpaceshipSearchPostgreView.class)
+        var content = Instancio.ofList(Spaceship.class)
             .size(2)
-            .generate(field(SpaceshipSearchPostgreView::getName), gen -> gen.oneOf("X-Wing", "Y-Wing"))
+            .generate(field(Spaceship::getName), gen -> gen.oneOf("X-Wing", "Y-Wing"))
             .create();
 
         given(findSpaceship.find(any(), any())).willReturn(new PageImpl<>(content));

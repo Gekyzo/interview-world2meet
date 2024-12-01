@@ -51,4 +51,9 @@ public class MediaAdapter implements MediaPort {
             });
     }
 
+    @Override
+    public Optional<Media> findByName(String name) {
+        return mediaRepo.findByNameIgnoreCase(name).map(mediaMapper::toDomainEntity);
+    }
+
 }

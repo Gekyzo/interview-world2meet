@@ -66,7 +66,7 @@ public class SpaceshipAdapter implements SpaceshipPort {
     }
 
     @Override
-    public Page<SpaceshipSearchPostgreView> find(SearchSpaceshipQuery query, Pageable pageable) {
+    public Page<Spaceship> find(SearchSpaceshipQuery query, Pageable pageable) {
 
         ExampleMatcher exampleMatcher = ExampleMatcher.matching()
             .withIgnoreNullValues()
@@ -77,7 +77,7 @@ public class SpaceshipAdapter implements SpaceshipPort {
         Example<SpaceshipSearchPostgreView> example = Example.of(spaceshipViewMapper.queryToModel(query),
             exampleMatcher);
 
-        return spaceshipViewRepo.findAll(example, pageable);
+        return spaceshipViewRepo.findAll(example, pageable).map(spaceshipViewMapper::viewToDomain);
     }
 
 }

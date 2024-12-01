@@ -18,7 +18,6 @@ import com.excelia.spaceships.infrastructure.out.persistence.model.SpaceshipPost
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.MediaPostgreRepository;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipPostgreRepository;
 import com.excelia.spaceships.infrastructure.out.persistence.repositories.SpaceshipViewPostgreRepository;
-import com.excelia.spaceships.infrastructure.out.persistence.views.SpaceshipSearchPostgreView;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -173,12 +172,10 @@ class SpaceshipAdapterTest {
 
             var result = sut.find(query, pageable);
 
-            assertThat(result).zipSatisfy(expectedSpaceships, (SpaceshipSearchPostgreView view, Spaceship model) -> {
-                assertThat(view)
-                    .usingRecursiveComparison()
-                    .ignoringFields("media", "appearsIn")
-                    .isEqualTo(model);
-            });
+            assertThat(result).zipSatisfy(expectedSpaceships, (Spaceship view, Spaceship model) -> assertThat(view)
+                .usingRecursiveComparison()
+                .ignoringFields("media", "appearsIn")
+                .isEqualTo(model));
         }
 
     }

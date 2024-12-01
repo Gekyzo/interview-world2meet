@@ -12,4 +12,5 @@ public interface MediaPort {
 
     Media upsert(Media entity);
 
+    Optional<Media> findByName(String name);
 }
